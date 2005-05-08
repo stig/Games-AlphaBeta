@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.3
 #
 
+2004-08-25 19:01:01 GMT	Stig Brautaset <stig@brautaset.org>	patch-7
+
+    Summary:
+      note that Carp is a prereq for these modules
+    Revision:
+      Games-AlphaBeta--devo--0.3--patch-7
+
+
+    modified files:
+     Changes Makefile.PL
+
+
 2004-08-25 18:38:12 GMT	Stig Brautaset <stig@brautaset.org>	patch-6
 
     Summary:
