@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-09-04 20:04:42 GMT	Stig Brautaset <stig@brautaset.org>	patch-30
+
+    Summary:
+      bump version number for dist
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-30
+
+
+    modified files:
+     Changes Makefile.PL
+
+
 2004-09-04 19:59:35 GMT	Stig Brautaset <stig@brautaset.org>	patch-29
 
     Summary:
