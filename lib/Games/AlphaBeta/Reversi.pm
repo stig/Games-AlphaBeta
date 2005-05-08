@@ -112,111 +112,6 @@ sub as_string {
 }
 
 
-=item valid_move $x, $y
-
-Return true if the given $x/$y coordinate is a valid move for the
-current player, false otherwise.
-
-=cut
-
-sub valid_move {
-    my ($self, $x, $y) = @_;
-
-    return undef if $self->{board}[$x][$y];  # Slot must be free
-
-    # Define some convenient names.
-    my $size    = $self->{size};
-    my $b       = $self->{board};
-    my $me      = $self->{player};
-    my $not_me  = 3 - $me;
-
-    my ($tx, $ty);
-
-    # Check left 
-    for ($tx = $x - 1; $tx >= 0 && $b->[$tx][$y] == $not_me; $tx--) {
-         ;
-    }
-    if ($tx >= 0 && $tx != $x - 1 && $b->[$tx][$y] == $me) {
-        return 1;
-    }
-
-    # Check right
-    for ($tx = $x + 1; $tx < $size && $b->[$tx][$y] == $not_me; $tx++) {
-        ;
-    }
-    if ($tx < $size && $tx != $x + 1 && $b->[$tx][$y] == $me) {
-        return 1;
-    }
-
-    # Check up
-    for ($ty = $y - 1; $ty >= 0 && $b->[$x][$ty] == $not_me; $ty--) {
-        ;
-    }
-    if ($ty >= 0 && $ty != $y - 1 && $b->[$x][$ty] == $me) {
-        return 1;
-    }
-
-    # Check down
-    for ($ty = $y + 1; $ty < $size && $b->[$x][$ty] == $not_me; $ty++) {
-        ;
-    }
-    if ($ty < $size && $ty != $y + 1 && $b->[$x][$ty] == $me) {
-        return 1;
-    }
-
-    # Check up/left
-    $tx = $x - 1;
-    $ty = $y - 1;
-    while ($tx >= 0 && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
-        $tx--; 
-        $ty--;
-    }
-    if ($tx >= 0 && $ty >= 0 && $tx != $x - 1 && $ty != $y - 1 &&
-        $b->[$tx][$ty] == $me) {
-        return 1;
-    }
-
-
-    # Check up/right
-    $tx = $x - 1;
-    $ty = $y + 1;
-    while ($tx >= 0 && $ty < $size && $b->[$tx][$ty] == $not_me) {
-        $tx--; 
-        $ty++;
-    }
-    if ($tx >= 0 && $ty < $size && $tx != $x - 1 && $ty != $y + 1 &&
-        $b->[$tx][$ty] == $me) {
-        return 1;
-    }
-
-    # Check down/right
-    $tx = $x + 1;
-    $ty = $y + 1;
-    while ($tx < $size && $ty < $size && $b->[$tx][$ty] == $not_me) {
-        $tx++; 
-        $ty++;
-    }
-    if ($tx < $size && $ty < $size && $tx != $x + 1 && $ty != $y + 1 &&
-        $b->[$tx][$ty] == $me) {
-        return 1;
-    }
-
-    # Check down/left
-    $tx = $x + 1;
-    $ty = $y - 1;
-    while ($tx < $size && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
-        $tx++; 
-        $ty--;
-    }
-    if ($tx < $size && $ty >= 0 && $tx != $x + 1 && $ty != $y - 1 &&
-        $b->[$tx][$ty] == $me) {
-        return 1;
-    }
-
-    # If we got here the move was illegal
-    return undef;
-}
-
 =item findmoves
 
 Return an array of all legal moves at the current position (for
@@ -228,12 +123,106 @@ sub findmoves {
     my $self = shift;
 
     my $b = $self->{board};
+    my $size = $self->{size};
     my @moves;
 
-    for my $x (0 .. $self->{size} - 1) {
-        for my $y (0 .. $self->{size} - 1) {
-            if (!$b->[$x][$y] && $self->valid_move($x, $y)) {
-                push @moves, [$x, $y];
+    for my $x (0 .. $size - 1) {
+        INNER: for my $y (0 .. $size - 1) {
+            unless ($b->[$x][$y]) {
+                # Define some convenient names.
+                my $me      = $self->{player};
+                my $not_me  = 3 - $me;
+
+                my ($tx, $ty);
+
+                # Check left 
+                for ($tx = $x - 1; $tx >= 0 && $b->[$tx][$y] == $not_me; $tx--) {
+                     ;
+                }
+                if ($tx >= 0 && $tx != $x - 1 && $b->[$tx][$y] == $me) {
+                    push @moves, [$x, $y];
+                    next INNER;
+                }
+
+                # Check right
+                for ($tx = $x + 1; $tx < $size && $b->[$tx][$y] == $not_me; $tx++) {
+                    ;
+                }
+                if ($tx < $size && $tx != $x + 1 && $b->[$tx][$y] == $me) {
+                    push @moves, [$x, $y];
+                    next INNER;
+                }
+
+                # Check up
+                for ($ty = $y - 1; $ty >= 0 && $b->[$x][$ty] == $not_me; $ty--) {
+                    ;
+                }
+                if ($ty >= 0 && $ty != $y - 1 && $b->[$x][$ty] == $me) {
+                    push @moves, [$x, $y];
+                    next INNER;
+                }
+
+                # Check down
+                for ($ty = $y + 1; $ty < $size && $b->[$x][$ty] == $not_me; $ty++) {
+                    ;
+                }
+                if ($ty < $size && $ty != $y + 1 && $b->[$x][$ty] == $me) {
+                    push @moves, [$x, $y];
+                    next INNER;
+                }
+
+                # Check up/left
+                $tx = $x - 1;
+                $ty = $y - 1;
+                while ($tx >= 0 && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
+                    $tx--; 
+                    $ty--;
+                }
+                if ($tx >= 0 && $ty >= 0 && $tx != $x - 1 && $ty != $y - 1 &&
+                    $b->[$tx][$ty] == $me) {
+                    push @moves, [$x, $y];
+                    next INNER;
+                }
+
+
+                # Check up/right
+                $tx = $x - 1;
+                $ty = $y + 1;
+                while ($tx >= 0 && $ty < $size && $b->[$tx][$ty] == $not_me) {
+                    $tx--; 
+                    $ty++;
+                }
+                if ($tx >= 0 && $ty < $size && $tx != $x - 1 && $ty != $y + 1 &&
+                    $b->[$tx][$ty] == $me) {
+                    push @moves, [$x, $y];
+                    next INNER;
+                }
+
+                # Check down/right
+                $tx = $x + 1;
+                $ty = $y + 1;
+                while ($tx < $size && $ty < $size && $b->[$tx][$ty] == $not_me) {
+                    $tx++; 
+                    $ty++;
+                }
+                if ($tx < $size && $ty < $size && $tx != $x + 1 && $ty != $y + 1 &&
+                    $b->[$tx][$ty] == $me) {
+                    push @moves, [$x, $y];
+                    next INNER;
+                }
+
+                # Check down/left
+                $tx = $x + 1;
+                $ty = $y - 1;
+                while ($tx < $size && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
+                    $tx++; 
+                    $ty--;
+                }
+                if ($tx < $size && $ty >= 0 && $tx != $x + 1 && $ty != $y - 1 &&
+                    $b->[$tx][$ty] == $me) {
+                    push @moves, [$x, $y];
+                    next INNER;
+                }
             }
         }
     }
