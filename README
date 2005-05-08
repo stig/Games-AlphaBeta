@@ -1,5 +1,5 @@
-Games::AlphaBeta version 0.2.x
-==============================
+Games::AlphaBeta version 0.30
+=============================
 
 Games::AlphaBeta provides a generic implementation of the
 AlphaBeta game-tree search algorithm (also known as MiniMax
@@ -21,8 +21,7 @@ To install this module type the following:
 
 DEPENDENCIES
 
-This module inherits from Games::Sequential and will occasionally
-carp or croak rather than warn and die.
+This module depends on Carp.
 
 COPYRIGHT AND LICENCE
 
