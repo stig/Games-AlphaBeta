@@ -30,10 +30,9 @@ zero-sum game with perfect information. Examples of such games
 include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many, many
 other boardgames. 
 
-This module inherits most of its methods from Games::Sequential.
-However, users will have to implement (and provide this module
-with pointers to) three more callback functions specific to the
-game they are implementing. The four callbacks required are:
+Users have to implement (and provide this module with references
+to) four callback functions specific to the game they are
+implementing. The four callbacks required are:
 
 =over 4
 
@@ -67,9 +66,14 @@ the current player. The value must be in the range -99_999 -
 
 =head1 METHODS
 
+Most of this module's methods are inherited from
+Games::Sequential; be sure to check its documentation. 
+
 Users must not modify the referred-to values of references
 returned by any of the below methods, except, of course,
-indirectly using the supplied callbacks mentioned above.
+indirectly using the supplied callbacks.
+
+This module adds these methods to the Games::Sequential object:
 
 =over 4
 
