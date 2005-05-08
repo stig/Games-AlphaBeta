@@ -8,7 +8,7 @@ use strict;
 use warnings;
 
 
-our $VERSION = '0.4.0';
+our $VERSION = '0.4.1';
 
 =head1 NAME
 
@@ -186,12 +186,18 @@ sub _alphabeta {
     # when we find an end position at every branch (for example,
     # near the end of the game)
     #
-    if (($pos->endpos && ++$self->{found_end}) || $ply <= 0) {
+    if ($pos->endpos) {
+        $self->{found_end}++;
+        return $pos->evaluate;
+    }
+    elsif ($ply <= 0) {
         return $pos->evaluate;
     }
 
-    return $pos->evaluate
-        unless @moves = $pos->findmoves;
+    unless (@moves = $pos->findmoves) {
+        $self->{found_end}++;
+        return $pos->evaluate;
+    }
 
     for my $move (@moves) {
         my ($npos, $sc);

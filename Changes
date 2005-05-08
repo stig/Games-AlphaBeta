@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-11-14 18:18:47 GMT	Stig Brautaset <stig@brautaset.org>	patch-32
+
+    Summary:
+      return with evaluation if no moves were found
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-32
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta.pm
+
+
 2004-11-14 18:09:01 GMT	Stig Brautaset <stig@brautaset.org>	patch-31
 
     Summary:
