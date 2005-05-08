@@ -137,10 +137,11 @@ sub abmove {
         $ply = $self->{ply};
     }
 
-    my $bestmove;
+    my (@moves, $bestmove);
     my $pos = $self->peek_pos;
-    my @moves = $pos->findmoves 
-        or return;
+
+    return if $pos->endpos;
+    return unless @moves = $pos->findmoves;
 
     my $alpha = $self->{alpha};
     my $beta = $self->{beta};
