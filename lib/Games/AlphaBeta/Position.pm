@@ -6,7 +6,7 @@ use warnings;
 
 use Carp;
 
-our $VERSION = '0.1';
+our $VERSION = '0.1.0';
 
 =head1 NAME
 
@@ -35,7 +35,7 @@ its methods from L<Games::Sequential::Position>; make sure you
 read its documentation.
 
 This class is provided for convenience. You don't need this class
-in order to use C<Games::AlphaBeta>. It is, however, also
+in order to use L<Games::AlphaBeta>. It is, however, also
 possible to make use of this class on its own.
 
 =head1 MISSING METHODS
@@ -44,8 +44,8 @@ Modules inheriting this class must implement at least these three
 methods (in addition to C<apply()> which is required by
 L<Games::Sequential::Position>): C<endpos()>, C<evaluate()> &amp;
 C<findmoves()>. If you chose to not use this class, you must also
-implement a C<copy()> method which makes a deep copy of the
-object.
+implement a C<copy()> method which makes a deep copy of a
+position object.
 
 Here's a quick description of how the missing methods must work:
 

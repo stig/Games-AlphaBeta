@@ -35,6 +35,12 @@ Games::AlphaBeta
 
 =head1 DESCRIPTION
 
+This module implements a position-object suitable for use with
+L<Games::AlphaBeta>. It inherits from the
+L<Games::AlphaBeta::Position> base class, so be sure to read its
+documentation. The methods implemented there will not be
+described here.
+
 
 =head1 METHODS
 
@@ -44,7 +50,8 @@ Games::AlphaBeta
 
 I<Internal method.>
 
-Initialize the initial state.
+Initialize the initial state. Call SUPER::_init(@_) to do part of
+the work.
 
 =cut
 
@@ -252,7 +259,8 @@ sub evaluate {
 
 =item endpos 
 
-Return true if the current position is an end position.
+Return true if the current position is an end position, or undef
+otherwise.
 
 =cut
 
@@ -276,6 +284,7 @@ sub endpos {
 =item apply $move
 
 Apply a move to the current position, producing the new position.
+Return reference to itself on succes, undef on error.
 
 =cut
 
@@ -447,8 +456,12 @@ sub apply ($) {
 
 =head1 BUGS
 
-
-=head1 TODO
+The C<findmoves()> method is too slow. This method is critical to
+performance when running under Games::AlphaBeta, as more than 60%
+of the execution time is spent there (when searching to ply 3).
+Both the C<evaluate()> and C<endpos()> routines use
+C<findmoves()> internally, so by speeding this routine up we
+could gain a lot of speed.
 
 
 =head1 SEE ALSO

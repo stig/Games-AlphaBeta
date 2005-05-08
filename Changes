@@ -2,6 +2,19 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-09-04 19:57:14 GMT	Stig Brautaset <stig@brautaset.org>	patch-28
+
+    Summary:
+      filling in documentation a bit
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-28
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Position.pm
+     lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-09-04 18:06:17 GMT	Stig Brautaset <stig@brautaset.org>	patch-27
 
     Summary:
