@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-09-04 17:12:15 GMT	Stig Brautaset <stig@brautaset.org>	patch-25
+
+    Summary:
+      only call valid_move() on empty slots in findmoves()
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-25
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-09-04 08:52:19 GMT	Stig Brautaset <stig@brautaset.org>	patch-24
 
     Summary:

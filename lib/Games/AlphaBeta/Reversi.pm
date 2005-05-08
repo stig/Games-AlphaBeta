@@ -122,7 +122,7 @@ current player, false otherwise.
 sub valid_move {
     my ($self, $x, $y) = @_;
 
-    return undef    if $self->{board}[$x][$y];  # Slot must be free
+    return undef if $self->{board}[$x][$y];  # Slot must be free
 
     # Define some convenient names.
     my $size    = $self->{size};
@@ -226,11 +226,13 @@ the current player).
 
 sub findmoves {
     my $self = shift;
+
+    my $b = $self->{board};
     my @moves;
 
     for my $x (0 .. $self->{size} - 1) {
         for my $y (0 .. $self->{size} - 1) {
-            if ($self->valid_move($x, $y)) {
+            if (!$b->[$x][$y] && $self->valid_move($x, $y)) {
                 push @moves, [$x, $y];
             }
         }
