@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-09-02 23:53:22 GMT	Stig Brautaset <stig@brautaset.org>	patch-14
+
+    Summary:
+      support non-8x8 boards in valid_move()
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-14
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-09-02 23:09:02 GMT	Stig Brautaset <stig@brautaset.org>	patch-13
 
     Summary:

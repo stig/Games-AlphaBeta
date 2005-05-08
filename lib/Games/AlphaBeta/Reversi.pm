@@ -125,6 +125,7 @@ sub valid_move {
     return undef    if $self->{board}[$x][$y];  # Slot must be free
 
     # Define some convenient names.
+    my $size    = $self->{size};
     my $b       = $self->{board};
     my $me      = $self->{player};
     my $not_me  = 3 - $me;
@@ -140,10 +141,10 @@ sub valid_move {
     }
 
     # Check right
-    for ($tx = $x + 1; $tx < 8 && $b->[$tx][$y] == $not_me; $tx++) {
+    for ($tx = $x + 1; $tx < $size && $b->[$tx][$y] == $not_me; $tx++) {
         ;
     }
-    if ($tx < 8 && $tx != $x + 1 && $b->[$tx][$y] == $me) {
+    if ($tx < $size && $tx != $x + 1 && $b->[$tx][$y] == $me) {
         return 1;
     }
 
@@ -156,10 +157,10 @@ sub valid_move {
     }
 
     # Check down
-    for ($ty = $y + 1; $ty < 8 && $b->[$x][$ty] == $not_me; $ty++) {
+    for ($ty = $y + 1; $ty < $size && $b->[$x][$ty] == $not_me; $ty++) {
         ;
     }
-    if ($ty < 8 && $ty != $y + 1 && $b->[$x][$ty] == $me) {
+    if ($ty < $size && $ty != $y + 1 && $b->[$x][$ty] == $me) {
         return 1;
     }
 
@@ -179,11 +180,11 @@ sub valid_move {
     # Check up/right
     $tx = $x - 1;
     $ty = $y + 1;
-    while ($tx >= 0 && $ty < 8 && $b->[$tx][$ty] == $not_me) {
+    while ($tx >= 0 && $ty < $size && $b->[$tx][$ty] == $not_me) {
         $tx--; 
         $ty++;
     }
-    if ($tx >= 0 && $ty < 8 && $tx != $x - 1 && $ty != $y + 1 &&
+    if ($tx >= 0 && $ty < $size && $tx != $x - 1 && $ty != $y + 1 &&
         $b->[$tx][$ty] == $me) {
         return 1;
     }
@@ -191,11 +192,11 @@ sub valid_move {
     # Check down/right
     $tx = $x + 1;
     $ty = $y + 1;
-    while ($tx < 8 && $ty < 8 && $b->[$tx][$ty] == $not_me) {
+    while ($tx < $size && $ty < $size && $b->[$tx][$ty] == $not_me) {
         $tx++; 
         $ty++;
     }
-    if ($tx < 8 && $ty < 8 && $tx != $x + 1 && $ty != $y + 1 &&
+    if ($tx < $size && $ty < $size && $tx != $x + 1 && $ty != $y + 1 &&
         $b->[$tx][$ty] == $me) {
         return 1;
     }
@@ -203,11 +204,11 @@ sub valid_move {
     # Check down/left
     $tx = $x + 1;
     $ty = $y - 1;
-    while ($tx < 8 && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
+    while ($tx < $size && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
         $tx++; 
         $ty--;
     }
-    if ($tx < 8 && $ty >= 0 && $tx != $x + 1 && $ty != $y - 1 &&
+    if ($tx < $size && $ty >= 0 && $tx != $x + 1 && $ty != $y - 1 &&
         $b->[$tx][$ty] == $me) {
         return 1;
     }
