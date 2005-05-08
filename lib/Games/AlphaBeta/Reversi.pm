@@ -269,7 +269,165 @@ Apply a move to the current position, producing the new position.
 
 sub apply ($) {
     my ($self, $move) = @_;
-    print "I'm here, don't worry...\n";
+
+    my $size    = $self->{size};
+    my $b       = $self->{board};
+    my $me      = $self->{player};
+    my $not_me  = 3 - $self->{player};
+    my ($x, $y) = @$move;
+
+    # null or pass move
+    if ($x == -1 && $y == -1) {
+        $self->{player} = $not_me;
+        return $self;
+    }
+
+    my ($tx, $ty, $flipped);
+
+    # slot must not be outside the board, or already occupied
+    if ($x < 0 || $x > $size || $y < 0 || $y > $size) {
+        return undef;
+    }
+    elsif ($b->[$x][$y]) {
+        return undef;
+    }
+
+    # left
+    for ($tx = $x - 1; $tx >= 0 && $b->[$tx][$y] == $not_me; $tx--) {
+        ;
+    }
+    if ($tx >= 0 && $tx != $x - 1 && $b->[$tx][$y] == $me) {
+        $tx = $x - 1;
+        while ($tx >= 0 && $b->[$tx][$y] == $not_me) {
+            $b->[$tx][$y] = $me;
+            $tx--;
+        }
+        $flipped++;
+    }
+
+    # right
+    for ($tx = $x + 1; $tx < $size && $b->[$tx][$y] == $not_me; $tx++) {
+        ;
+    }
+    if ($tx < $size && $tx != $x + 1 && $b->[$tx][$y] == $me) {
+        $tx = $x + 1;
+        while ($tx < $size && $b->[$tx][$y] == $not_me) {
+            $b->[$tx][$y] = $me;
+            $tx++;
+        }
+        $flipped++;
+    }
+
+    # up
+    for ($ty = $y - 1; $ty >= 0 && $b->[$x][$ty] == $not_me; $ty--) {
+        ;
+    }
+    if ($ty >= 0 && $ty != $y - 1 && $b->[$x][$ty] == $me) {
+        $ty = $y - 1;
+        while ($ty >= 0 && $b->[$x][$ty] == $not_me) {
+            $b->[$x][$ty] = $me;
+            $ty--;
+        }
+        $flipped++;
+    }
+    
+    # down
+    for ($ty = $y + 1; $ty < $size && $b->[$x][$ty] == $not_me; $ty++) {
+        ;
+    }
+    if ($ty < $size && $ty != $y + 1 && $b->[$x][$ty] == $me) {
+        $ty = $y + 1;
+        while ($ty < $size && $b->[$x][$ty] == $not_me) {
+            $b->[$x][$ty] = $me;
+            $ty++;
+        }
+        $flipped++;
+    }
+    
+    # up/left
+    $tx = $x - 1;
+    $ty = $y - 1; 
+    while ($tx >= 0 && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
+        $tx--;
+        $ty--;
+    }
+    if ($tx >= 0 && $ty >= 0 && $tx != $x - 1 && $ty != $y - 1 && 
+            $b->[$tx][$ty] == $me) {
+        $tx = $x - 1;
+        $ty = $y - 1;
+        while ($tx >= 0 && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
+            $b->[$tx][$ty] = $me;
+            $tx--; 
+            $ty--;
+        }
+        $flipped++;
+    }
+
+    # up/right
+    $tx = $x - 1;
+    $ty = $y + 1; 
+    while ($tx >= 0 && $ty < $size && $b->[$tx][$ty] == $not_me) {
+        $tx--;
+        $ty++;
+    }
+    if ($tx >= 0 && $ty < $size && $tx != $x - 1 && $ty != $y + 1 && 
+            $b->[$tx][$ty] == $me) {
+        $tx = $x - 1;
+        $ty = $y + 1;
+        while ($tx >= 0 && $ty < $size && $b->[$tx][$ty] == $not_me) {
+            $b->[$tx][$ty] = $me;
+            $tx--;
+            $ty++;
+        }
+        $flipped++;
+    }
+    
+    # down/right
+    $tx = $x + 1;
+    $ty = $y + 1; 
+    while ($tx < $size && $ty < $size && $b->[$tx][$ty] == $not_me) {
+        $tx++;
+        $ty++;
+    }
+    if ($tx < $size && $ty < $size && $tx != $x + 1 && $ty != $y + 1 && 
+            $b->[$tx][$ty] == $me) {
+        $tx = $x + 1;
+        $ty = $y + 1;
+        while ($tx < $size && $ty < $size && $b->[$tx][$ty] == $not_me) {
+            $b->[$tx][$ty] = $me;
+            $tx++;
+            $ty++;
+        }
+        $flipped++;
+    }
+
+    # down/left
+    $tx = $x + 1;
+    $ty = $y - 1;
+    while ($tx < $size && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
+        $tx++;
+        $ty--;
+    }
+    if ($tx < $size && $ty >= 0 && $tx != $x + 1 && $ty != $y - 1 && 
+            $b->[$tx][$ty] == $me) {
+        $tx = $x + 1;
+        $ty = $y - 1;
+        while ($tx < $size && $ty >= 0 && $b->[$tx][$ty] == $not_me) {
+            $b->[$tx][$ty] = $me;
+            $tx++;
+            $ty--;
+        }
+        $flipped++;
+    }
+
+    unless ($flipped) {
+        return undef;
+    }
+
+    $b->[$x][$y] = $me;
+    $self->{player} = $not_me;
+
+    return $self;
 }
 
 =back

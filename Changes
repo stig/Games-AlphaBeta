@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-09-02 07:32:02 GMT	Stig Brautaset <stig@brautaset.org>	patch-11
+
+    Summary:
+      filled in apply() method
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-11
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-08-31 23:50:55 GMT	Stig Brautaset <stig@brautaset.org>	patch-10
 
     Summary:
