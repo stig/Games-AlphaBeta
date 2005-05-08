@@ -6,7 +6,7 @@ use warnings;
 
 use Carp;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -34,25 +34,30 @@ specific to the game in question. These are:
 
 =over 4
 
-=item FINDMOVES $position
-
-Returns list of all legal moves at the current player at the
-current $position.
-
 =item MOVE $position, $move
 
-Returns the position resulting from copying $position and
-applying $move to it.
+Create $newpos as copy of $position and apply $move to it.
+Return $newpos.
+
+=item FINDMOVES $position
+
+Returns a list of all legal moves the current player can perform
+at the current $position. Note that if a pass move is legal in
+the game (i.e. as it is in Othello) you must allow for this
+function to produce a null move. A null move does nothing but
+pass the turn to the next player.
 
 =item ENDOFGAME $position
 
 Returns true if $position is the end of the game, false
-otherwise.
+otherwise. Remember to account for a draw in addition to either
+of the players winning. 
 
 =item EVALUATE $position
 
 Returns the calculated fitness value of the current position for
-the current player.
+the current player. The value must be in the range -99_999 -
+99_999 (see BUGS). 
 
 =back
 
@@ -291,7 +296,7 @@ sub aimove {
     $self->{FOUND_END} = $self->{POSITIONS} = 0;
 	for my $move (@moves) {
 		my $npos = $self->{MOVE}($pos, $move) or croak "No move returned from MOVE!";
-		my $sc = -$self->ab_internal($npos, -$beta, -$alpha, $ply - 1);
+		my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
 
         print "ab val: $sc" if $self->{DEBUG};
         if ($sc > $alpha) {
@@ -313,13 +318,13 @@ sub aimove {
 
 =over 4
 
-=item ab_internal 
+=item _alphabeta 
 
 Internal AlphaBeta routine. 
 
 =cut
 
-sub ab_internal {
+sub _alphabeta {
 	my ($self, $pos, $alpha, $beta, $ply) = @_;
     my @moves;
 
@@ -343,7 +348,7 @@ sub ab_internal {
 
 	for my $move (@moves) {
 		my $npos = $self->{MOVE}($pos, $move);
-		my $sc = -$self->ab_internal($npos, -$beta, -$alpha, $ply - 1);
+		my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
 
 		$alpha = $sc if $sc > $alpha;
         last unless $alpha < $beta;
@@ -368,16 +373,29 @@ The valid range of values EVALUATE can retun is hardcoded to
 -99_999 - +99_999 at the moment. Probably should provide methods
 to get/set these.
 
+
+=head1 TODO
+
+Implement missing methods, e.g.: clone(), snapshot(), save()
+E<amp> resume().
+
+Fix bugs.
+
+
 =head1 SEE ALSO
 
 The author's website for this module: 
 http://brautaset.org/projects/ggtl-perl/
 
+The author's website for the C library that inspired this module:
+http://brautaset.org/projects/ggtl/
+
+
 =head1 AUTHOR
 
 Stig Brautaset, E<lt>stig@brautaset.orgE<gt>
 
-=head1 COPYRIGHT AND LICENSE
+=head1 COPYRIGHT AND LICENCE
 
 Copyright (C) 2004 by Stig Brautaset
 

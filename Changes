@@ -1,5 +1,8 @@
 Revision history for Perl extension Games::GGTL.
 
+0.02  Sun May 23 16:02:21 2004
+	- renamed internal method; added to POD
+
 0.01  Sat May 22 16:14:41 2004
 	- original version; created by h2xs 1.23 with options
 		-AX -n Games::GGTL
