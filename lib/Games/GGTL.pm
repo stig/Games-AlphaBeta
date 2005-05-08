@@ -88,8 +88,23 @@ They can later be changed with their respective accessor methods.
 sub new {
 	my $invocant = shift;
 	my $class = ref($invocant) || $invocant;
-	my $self = {
+	my $self = bless {}, $class;
 
+    $self->_init(@_);
+    return $self;
+}
+
+
+=item _init [@list]
+
+Initialize a GGTL object.
+
+=cut
+
+sub _init {
+    my $self = shift;
+    my $args = @_ && ref($_[0]) ? shift : { @_ };
+    my $config = {
 		# Stacks for backtracking
 		POS_HIST	=> [],
 		MOVE_HIST	=> [],
@@ -113,14 +128,23 @@ sub new {
 		POSITIONS	=> 0,
 	};
 
-    # Override default variables
-    my %args = @_;
-    foreach (qw/EVALUATE FINDMOVES MOVE ENDOFGAME PLY DEBUG/) {
-        $self->{$_} = $args{$_} if exists $args{$_};
+    # Set defaults
+    while (my ($key, $val) = each %{ $config }) {
+        $self->{$key} = $val;
     }
-    $self->{POS_HIST} = [ $args{STARTPOS} ] if $args{STARTPOS};
 
-	return bless $self, $class;
+    # Override defaults
+    while (my ($key, $val) = each %{ $args }) {
+        if (exists $self->{$key}) {
+            $self->{$key} = $val;
+        }
+        else {
+            carp "Non-recognised key/value pair: $key/$val\n";
+        }
+    }
+    $self->{POS_HIST} = [ $args->{STARTPOS} ] if exists($args->{STARTPOS});
+
+	return $self;
 }
 
 =item init $position
@@ -157,8 +181,9 @@ sub setfuncs {
 
     my %funcs = @_;
     foreach (qw/EVALUATE FINDMOVES MOVE ENDOFGAME/) {
-        $self->{$_} = $funcs{$_} if $funcs{$_};
+        $self->{$_} = $funcs{$_} if ref($funcs{$_}) eq 'CODE';
     }
+    return $self;
 }
 
 
