@@ -2,6 +2,22 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-09-03 20:50:51 GMT	Stig Brautaset <stig@brautaset.org>	patch-17
+
+    Summary:
+      added Games::AlphaBeta::Position base class
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-17
+
+
+    new files:
+     lib/Games/AlphaBeta/.arch-ids/Position.pm.id
+     lib/Games/AlphaBeta/Position.pm
+
+    modified files:
+     Changes
+
+
 2004-09-03 20:39:22 GMT	Stig Brautaset <stig@brautaset.org>	patch-16
 
     Summary:
