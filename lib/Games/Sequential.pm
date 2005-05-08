@@ -106,6 +106,8 @@ sub _init {
         $self->{$key} = $val if exists $self->{$key};
     }
 
+    croak "no apply() method defined" unless $self->can("apply");
+
     return $self;
 }
 

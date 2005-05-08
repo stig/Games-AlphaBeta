@@ -107,6 +107,10 @@ sub _init {
 
     @$self{keys %config} = values %config;
 
+    croak "no endpos() method defined" unless $self->can("endpos");
+    croak "no evaluate() method defined" unless $self->can("evaluate");
+    croak "no findmoves() method defined" unless $self->can("findmoves");
+
     return $self->SUPER::_init(@_);
 }
 

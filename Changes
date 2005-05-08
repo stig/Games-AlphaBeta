@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.3
 #
 
+2004-08-25 18:38:12 GMT	Stig Brautaset <stig@brautaset.org>	patch-6
+
+    Summary:
+      croak if required methods are not present
+    Revision:
+      Games-AlphaBeta--devo--0.3--patch-6
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta.pm lib/Games/Sequential.pm
+
+
 2004-08-25 07:56:06 GMT	Stig Brautaset <stig@brautaset.org>	patch-5
 
     Summary:
