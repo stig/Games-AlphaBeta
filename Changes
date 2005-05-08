@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-11-20 15:36:14 GMT	Stig Brautaset <stig@brautaset.org>	patch-39
+
+    Summary:
+      removed =hook & module version inc hack
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-39
+
+
+    modified files:
+     Changes
+
+
 2004-11-20 15:34:51 GMT	Stig Brautaset <stig@brautaset.org>	patch-38
 
     Summary:
