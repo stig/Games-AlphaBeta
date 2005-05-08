@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-08-30 20:26:30 GMT	Stig Brautaset <stig@brautaset.org>	patch-8
+
+    Summary:
+      test that ::Reversi ->can(as_string)
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-8
+
+
+    modified files:
+     Changes t/02_Games-AlphaBeta-Reversi.t
+
+
 2004-08-30 20:24:30 GMT	Stig Brautaset <stig@brautaset.org>	patch-7
 
     Summary:

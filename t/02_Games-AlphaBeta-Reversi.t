@@ -14,5 +14,5 @@ my $p;
 ok($p = new Games::AlphaBeta::Reversi,    "new()");
 isa_ok($p, Games::Sequential::Position);
 
-can_ok($p, qw/copy apply endpos evaluate findmoves/);
+can_ok($p, qw/copy as_string apply endpos evaluate findmoves/);
 
