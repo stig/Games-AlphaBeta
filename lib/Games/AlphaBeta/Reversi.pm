@@ -1,5 +1,5 @@
 package Games::AlphaBeta::Reversi;
-use base Games::Sequential::Position;
+use base Games::AlphaBeta::Position;
 use Carp;
 
 use strict;
@@ -15,23 +15,23 @@ playing Reversi
 
 =head1 SYNOPSIS
 
-  package My::Reversi;
-  use base Games::AlphaBeta::Reversi;
+    package My::Reversi;
+    use base Games::AlphaBeta::Reversi;
 
-  # Override drawing routine
-  sub draw { ... }
+    # Override drawing routine
+    sub draw { ... }
 
-  package main;
-  use My::Reversi;
-  use Games::AlphaBeta;
+    package main;
+    use My::Reversi;
+    use Games::AlphaBeta;
 
-  my ($p, $g);
-  $p = My::Reversi->new;
-  $g = Games::AlphaBeta->new($p);
+    my ($p, $g);
+    $p = My::Reversi->new;
+    $g = Games::AlphaBeta->new($p);
 
-  while ($g->abmove) {
-    $p->draw;
-  }
+    while ($g->abmove) {
+        $p->draw;
+    }
 
 =head1 DESCRIPTION
 
@@ -465,7 +465,7 @@ sub apply ($) {
 =head1 SEE ALSO
 
 The author's website, describing this and other projects:
-http://brautaset.org/projects/
+L<http://brautaset.org/projects/>
 
 
 =head1 AUTHOR

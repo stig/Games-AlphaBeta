@@ -4,7 +4,7 @@
 
 #########################
 
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 BEGIN {
     use_ok(Games::AlphaBeta::Reversi);
@@ -12,6 +12,7 @@ BEGIN {
 
 my $p;
 ok($p = new Games::AlphaBeta::Reversi,    "new()");
+isa_ok($p, Games::AlphaBeta::Position);
 isa_ok($p, Games::Sequential::Position);
 
 can_ok($p, qw/copy as_string apply endpos evaluate findmoves/);
