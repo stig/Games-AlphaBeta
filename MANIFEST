@@ -1,9 +1,9 @@
 Changes
 MANIFEST
+META.yml
 Makefile.PL
 README
 lib/Games/AlphaBeta.pm
 lib/Games/Sequential.pm
 t/Games-AlphaBeta.t
 t/Games-Sequential.t
-META.yml                                 Module meta-data (added by MakeMaker)
