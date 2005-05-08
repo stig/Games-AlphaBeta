@@ -142,11 +142,13 @@ sub _init {
         if (exists $self->{$key}) {
             $self->{$key} = $val;
         }
+        elsif ($key eq "INITIALPOS") {
+            $self->{POS_HIST} = [ $args->{INITIALPOS} ];
+        }
         else {
             carp "Non-recognised key/value pair: $key/$val\n";
         }
     }
-    $self->{POS_HIST} = [ $args->{INITIALPOS} ] if exists($args->{INITIALPOS});
 
 	return $self;
 }
@@ -319,6 +321,7 @@ sub abmove {
     my $alpha = $self->{ALPHA};
     my $beta = $self->{BETA};
 
+    print "Searching to depth $ply\n" if $self->{DEBUG};
     $self->{FOUND_END} = $self->{COUNT} = 0;
 	for my $move (@moves) {
 		my $npos = $self->{MOVE}($pos, $move) or croak "No move returned from MOVE!";
