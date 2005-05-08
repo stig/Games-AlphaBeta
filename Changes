@@ -1,0 +1,6 @@
+Revision history for Perl extension Games::GGTL.
+
+0.01  Sat May 22 16:14:41 2004
+	- original version; created by h2xs 1.23 with options
+		-AX -n Games::GGTL
+

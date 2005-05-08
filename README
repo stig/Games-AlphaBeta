@@ -1,0 +1,37 @@
+Games::GGTL version 0.01
+========================
+
+GGTL exists to help people create computer games, in particular
+2-player, zero-sum games with perfect information. Examples of
+such games include Chess, Othello, Connect4, Tic-Tac-Toe, Go and
+a whole slew of other boardgames. For such games GGTL provides
+AlphaBeta game-tree search.
+
+Users of the module will have to implement 4 callback functions
+specific to the game in question.
+
+This is the initial release.
+
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+This module makes occasional use of the Carp module.
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2004 by Stig Brautaset
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.3 or,
+at your option, any later version of Perl 5 you may have available.
+
+
