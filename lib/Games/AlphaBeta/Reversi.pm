@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-our $VERSION = '0.1.2';
+our $VERSION = '0.1.3';
 
 =head1 NAME
 
@@ -29,7 +29,7 @@ Games::AlphaBeta
     $p = My::Reversi->new;
     $g = Games::AlphaBeta->new($p);
 
-    while ($g->abmove) {
+    while ($p = $g->abmove) {
         $p->draw;
     }
 
