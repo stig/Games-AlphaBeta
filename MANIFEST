@@ -3,6 +3,7 @@ MANIFEST
 Makefile.PL
 README
 lib/Games/AlphaBeta.pm
+lib/Games/AlphaBeta/Position.pm
 lib/Games/AlphaBeta/Reversi.pm
 t/01_Games-AlphaBeta.t
 t/02_Games-AlphaBeta-Reversi.t

@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-09-03 23:07:26 GMT	Stig Brautaset <stig@brautaset.org>	patch-21
+
+    Summary:
+      added Games::AlphaBeta::Position to MANIFEST
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-21
+
+
+    modified files:
+     Changes MANIFEST
+
+
 2004-09-03 22:18:41 GMT	Stig Brautaset <stig@brautaset.org>	patch-20
 
     Summary:
