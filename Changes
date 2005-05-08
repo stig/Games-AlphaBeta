@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.3
 #
 
+2004-08-24 22:34:00 GMT	Stig Brautaset <stig@brautaset.org>	patch-2
+
+    Summary:
+      bump version number
+    Revision:
+      Games-AlphaBeta--devo--0.3--patch-2
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta.pm
+
+
 2004-08-24 22:31:57 GMT	Stig Brautaset <stig@brautaset.org>	patch-1
 
     Summary:
