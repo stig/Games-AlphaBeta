@@ -38,14 +38,15 @@ This class is provided for convenience. You don't need this class
 in order to use L<Games::AlphaBeta>. It is, however, also
 possible to make use of this class on its own.
 
-=head1 MISSING METHODS
+=head1 VIRTUAL METHODS
 
-Modules inheriting this class must implement at least these three
+Modules inheriting this class must implement at least these two
 methods (in addition to C<apply()> which is required by
-L<Games::Sequential::Position>): C<endpos()>, C<evaluate()> &amp;
-C<findmoves()>. If you chose to not use this class, you must also
-implement a C<copy()> method which makes a deep copy of a
-position object.
+L<Games::Sequential::Position>): C<evaluate()> &amp;
+C<findmoves()>. They can additionally override the implementation
+of C<endpos()>, which should be adequate for many games. If you
+chose to not use this class, you must also implement a C<copy()>
+method which makes a deep copy of a position object.
 
 Here's a quick description of how the missing methods must work:
 
@@ -54,18 +55,27 @@ Here's a quick description of how the missing methods must work:
 =item findmoves()
     
 Return an array of all moves possible for the current player at
-the current position. Don't forget to include null moves if the
-player is allowed to pass.
+the current position. Don't forget to return a null move if the
+player is allowed to pass; an empty array returned here denotes
+an ending position in the game.
 
-=item endpos()
+=cut
 
-True if the position is an ending position, i.e. either a draw or
-a win for one of the players.
+sub findmoves { 
+    croak "Called pure virtual methdod 'findmoves'\n";
+}
 
 =item evaluate()
 
 Return the "fitness" value for the current player at the current
 position.
+
+=cut
+
+sub evaluate { 
+    croak "Called pure virtual methdod 'evaluate'\n";
+}
+
 
 =back
 
@@ -102,6 +112,18 @@ EOF
     return $self;
 }
 
+
+=item endpos
+
+True if the position is an ending position, i.e. either a draw or
+a win for one of the players.
+
+Note: Not all games need this method, so the default
+implementation provided by this modules always returns false. 
+
+=cut
+
+sub endpos { return undef; }
 
 1;  # ensure using this module works
 __END__

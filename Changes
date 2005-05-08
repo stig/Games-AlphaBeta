@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-11-14 18:29:45 GMT	Stig Brautaset <stig@brautaset.org>	patch-33
+
+    Summary:
+      made missing methods into pure virtual methods
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-33
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Position.pm
+
+
 2004-11-14 18:18:47 GMT	Stig Brautaset <stig@brautaset.org>	patch-32
 
     Summary:
