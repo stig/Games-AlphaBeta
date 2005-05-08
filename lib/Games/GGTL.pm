@@ -119,9 +119,6 @@ sub _init {
 		MOVE	    => undef,
 		ENDOFGAME	=> undef,
 
-		# Internal runtime stuff
-		FOUND_END	=> 0,
-
         # Runtime variables
         PLY         => 2,       # default search depth
         ALPHA       => -100_000,
@@ -129,7 +126,6 @@ sub _init {
 
 		# Debug and statistics
 		DEBUG		=> 0,
-		POSITIONS	=> 0,
 	};
 
     # Set defaults
@@ -322,7 +318,7 @@ sub aimove {
     my $alpha = $self->{ALPHA};
     my $beta = $self->{BETA};
 
-    $self->{FOUND_END} = $self->{POSITIONS} = 0;
+    $self->{FOUND_END} = $self->{COUNT} = 0;
 	for my $move (@moves) {
 		my $npos = $self->{MOVE}($pos, $move) or croak "No move returned from MOVE!";
 		my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
@@ -335,7 +331,7 @@ sub aimove {
         }
         print "\n" if $self->{DEBUG};
     }
-    print "$self->{POSITIONS} visited\n" if $self->{DEBUG};
+    print "$self->{COUNT} visited\n" if $self->{DEBUG};
 
     return unless $bestmove;
     return $self->move($bestmove);
@@ -355,7 +351,7 @@ sub _alphabeta {
     my @moves;
 
 	# Keep count of the number of positions we've seen
-	$self->{POSITIONS}++;
+	$self->{COUNT}++;
 
     # When using iterative deepening we can optimise for the case
     # when we find an end position at every branch (for example,
