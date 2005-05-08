@@ -1,5 +1,6 @@
 package Games::AlphaBeta;
 use base Games::Sequential;
+
 use Carp;
 use 5.006001;
 
@@ -15,28 +16,28 @@ Games::AlphaBeta - game-tree search with object oriented interface
 
 =head1 SYNOPSIS
 
-  package Some::Game;
-  use base Games::Sequential::Position;
+    package My::GamePos;
+    use base Games::AlphaBeta::Position;
 
-  # initialise starting position
-  sub _init { ... }
+    # initialise starting position
+    sub _init { ... }
 
-  # Methods required by Games::AlphaBeta
-  sub apply { ... }
-  sub endpos { ... }
-  sub evaluate { ... }
-  sub findmoves { ... }
+    # Methods required by Games::AlphaBeta
+    sub apply { ... }
+    sub endpos { ... }
+    sub evaluate { ... }
+    sub findmoves { ... }
 
-  # Print a position in the game (optional)
-  sub draw { ... }
+    # Print a position in the game (optional)
+    sub draw { ... }
 
-  package main;
-  my $pos = Some::Game->new;
-  my $game = Games::AlphaBeta->new($pos);
+    package main;
+    my $pos = My::GamePos->new;
+    my $game = Games::AlphaBeta->new($pos);
 
-  while ($game->abmove) {
-      print draw($game->peek_pos);
-  }
+    while ($game->abmove) {
+        print draw($game->peek_pos);
+    }
 
 =head1 DESCRIPTION
 
@@ -49,50 +50,16 @@ include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many, many
 other boardgames. 
 
 Users must pass an object representing the initial state of the
-game as the first argument to ->new(). This object *must* provide
-the following five methods: C<copy()>, C<apply()>, C<endpos()>,
-C<evaluate()> and C<findmoves()>. You can use
-Games::Sequential::Position as a base class, in which case the
-C<copy()> method will be provided for you. Here's a short
-description of what each of the required methods of the position
-object:
-
-=over 4
-
-=item copy()
-
-Return a deep copy of the object.
-
-=item apply($move)
-
-Apply $move to the position producing the next position. 
-
-=item endpos()
-
-Returns true if the position is an end position, i.e. either a
-draw or a win for one of the players, and false otherwise. 
-
-=item findmoves()
-
-Returns a list of all legal moves the current player can perform
-at the current position. Note that if a pass move is legal in
-the game (i.e. as it is in Othello) you must allow for this
-function to produce a null move. A null move does nothing but
-pass the turn to the next player.
-
-=item evaluate()
-
-Returns the calculated fitness value of the current position for
-the current player. The value must be in the range -99_999 -
-99_999 (see BUGS). 
-
-=back
-
+game as the first argument to C<new()>. This object must provide
+the following methods: C<copy()>, C<apply()>, C<endpos()>,
+C<evaluate()> and C<findmoves()>. This is explained more
+carefully in L<Games::AlphaBeta::Position> which is a base class
+you can use to implement your position object.
 
 =head1 METHODS
 
 Most of this module's methods are inherited from
-Games::Sequential; be sure to check its documentation. The
+L<Games::Sequential>; be sure to check its documentation. The
 methods unique to Games::AlphaBeta are described below.
 
 =over 4
@@ -145,7 +112,7 @@ sub ply {
 
 Perform the best move found after an AlphaBeta game-tree search
 to depth $ply. If $ply is not specified, the default depth is
-used (see ply()). The best move found is performed and a
+used (see C<ply()>). The best move found is performed and a
 reference to the resulting position is returned. undef is
 returned on failure.
 
@@ -153,8 +120,8 @@ Note that this function can take a long time if $ply is high,
 particularly if the game in question has many possible moves at
 each position.
 
-If debug() is set, some basic debugging is printed as the search
-progresses.
+If C<debug()> is set, some basic debugging is printed as the
+search progresses.
 
 =cut
 
@@ -248,7 +215,7 @@ __END__
 
 =head1 BUGS
 
-The valid range of values C<evaluate> can return is hardcoded to
+The valid range of values C<evaluate()> can return is hardcoded to
 -99_999 - +99_999 at the moment. Probably should provide methods
 to get/set these.
 
@@ -261,7 +228,7 @@ Implement the missing iterative deepening alphabeta routine.
 =head1 SEE ALSO
 
 The author's website, describing this and other projects:
-http://brautaset.org/projects/
+L<http://brautaset.org/projects/>
 
 
 =head1 AUTHOR
@@ -278,4 +245,4 @@ at your option, any later version of Perl 5 you may have available.
 
 =cut
 
-# vim: shiftwidth=4 tabstop=4 softtabstop=6 expandtab 
+# vim: shiftwidth=4 tabstop=4 softtabstop=4 expandtab 

@@ -1,13 +1,10 @@
-Games::AlphaBeta version 0.30
-=============================
+Games::AlphaBeta & Games::AlphaBeta::Position
+=============================================
 
-Games::AlphaBeta provides a generic implementation of the
-AlphaBeta game-tree search algorithm (also known as MiniMax
-search with alpha beta pruning). This algorithm can be used to
-find the best move at a particular position in any two-player,
-zero-sum game with perfect information. Examples of such games
-include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many other
-boardgames. 
+These modules provide a generic framework for implementing games
+where the MiniMax/AlphaBeta game-tree search can be used.
+Examples of games that fall into this category include Chess,
+Othello, Connect4, Go, Tic-Tac-Toe and many other boardgames. 
 
 
 INSTALLATION
@@ -21,7 +18,7 @@ To install this module type the following:
 
 DEPENDENCIES
 
-This module depends on Carp.
+This module depends on Games::Sequential and Carp.
 
 COPYRIGHT AND LICENCE
 
