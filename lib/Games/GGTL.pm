@@ -95,9 +95,13 @@ sub new {
 }
 
 
+=begin internal
+
 =item _init [@list]
 
 Initialize a GGTL object.
+
+=end
 
 =cut
 
@@ -337,15 +341,12 @@ sub aimove {
     return $self->move($bestmove);
 }
 
-=begin 
 
-=head1 INTERNAL METHODS
+=begin internal
 
-=over 4
+=item _alphabeta $pos $alpha $beta $ply
 
-=item _alphabeta 
-
-Internal AlphaBeta routine. 
+=end
 
 =cut
 
