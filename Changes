@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.3
 #
 
+2004-08-25 19:13:27 GMT	Stig Brautaset <stig@brautaset.org>	patch-8
+
+    Summary:
+      corret MANIFEST
+    Revision:
+      Games-AlphaBeta--devo--0.3--patch-8
+
+
+    modified files:
+     Changes MANIFEST
+
+
 2004-08-25 19:01:01 GMT	Stig Brautaset <stig@brautaset.org>	patch-7
 
     Summary:
