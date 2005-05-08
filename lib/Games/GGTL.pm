@@ -226,9 +226,7 @@ Use this for drawing the board etc.
 
 sub peek_pos {
     my $self = shift;
-    my $pos = pop @{ $self->{POS_HIST} };
-    push @{ $self->{POS_HIST} }, $pos;
-    return $pos;
+    return $self->{POS_HIST}[-1];
 }
 
 
@@ -240,9 +238,7 @@ Return reference to last applied move.
 
 sub peek_move {
     my $self = shift;
-    my $move = pop @{ $self->{MOVE_HIST} };
-    push @{ $self->{MOVE_HIST} }, $move;
-    return $move;
+    return $self->{MOVE_HIST}[-1];
 }
 
 
