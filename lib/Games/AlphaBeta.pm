@@ -1,11 +1,11 @@
 package Games::AlphaBeta;
 use base Games::Sequential;
 use Carp;
-use 5.008003;
+use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.2.0';
 
 =head1 NAME
 
@@ -15,9 +15,9 @@ Games::AlphaBeta - game-tree search with object oriented interface
 
   use Games::AlphaBeta;
   my $game = Games::AlphaBeta->new( ... );
-  
+
   while ($game->abmove) {
-          print draw($game->peek_pos);
+      print draw($game->peek_pos);
   }
 
 =head1 DESCRIPTION
@@ -35,12 +35,12 @@ specific to the game they are implementing. These are:
 
 =over 4
 
-=item MOVE $position, $move
+=item move($position, $move)
 
 Create $newpos as copy of $position and apply $move to it.
 Return $newpos.
 
-=item FINDMOVES $position
+=item findmoves($position)
 
 Returns a list of all legal moves the current player can perform
 at the current $position. Note that if a pass move is legal in
@@ -48,13 +48,13 @@ the game (i.e. as it is in Othello) you must allow for this
 function to produce a null move. A null move does nothing but
 pass the turn to the next player.
 
-=item ENDOFGAME $position
+=item endofgame($position)
 
 Returns true if $position is the end of the game, false
 otherwise. Remember to account for a draw in addition to either
 of the players winning. 
 
-=item EVALUATE $position
+=item evaluate($position)
 
 Returns the calculated fitness value of the current position for
 the current player. The value must be in the range -99_999 -
@@ -72,54 +72,35 @@ Users must not modify the referred-to values of references
 returned by any of the below methods, except, of course,
 indirectly using the supplied callbacks.
 
-This module adds these methods to the Games::Sequential object:
+Games::AlphaBeta provides these new methods:
 
 =over 4
 
-=begin internal
-
 =item _init [@list]
 
-Initialize a AlphaBeta object.
+I<Internal method.>
 
-=end
+Initialize an AlphaBeta object.
 
 =cut
 
 sub _init {
     my $self = shift;
-    my $args = @_ && ref($_[0]) ? shift : { @_ };
-    my $config = {
-		# Callbacks
-		EVALUATE	=> undef,
-		FINDMOVES	=> undef,
-		ENDOFGAME	=> undef,
+    my %config = (
+        # Callbacks
+        evaluate    => undef,
+        findmoves   => undef,
+        endofgame   => undef,
 
         # Runtime variables
-        PLY         => 2,       # default search depth
-        ALPHA       => -100_000,
-        BETA        => 100_000,
-	};
+        ply         => 2,       # default search depth
+        alpha       => -100_000,
+        beta        => 100_000,
+    );
 
-    # Initialise backend
-    $self->SUPER::_init($args);
+    @$self{keys %config} = values %config;
 
-    # Set defaults
-    while (my ($key, $val) = each %{ $config }) {
-        $self->{$key} = $val;
-    }
-
-    # Override defaults
-    while (my ($key, $val) = each %{ $args }) {
-        if (exists $self->{$key}) {
-            $self->{$key} = $val;
-        }
-        else {
-            carp "Non-recognised key/value pair: $key/$val\n";
-        }
-    }
-
-	return $self;
+    return $self->SUPER::_init(@_);
 }
 
 
@@ -132,8 +113,8 @@ argument, set to new value.
 
 sub ply {
     my $self = shift;
-    my $prev = $self->{PLY};
-    $self->{PLY} = shift if @_;
+    my $prev = $self->{ply};
+    $self->{ply} = shift if @_;
     return $prev;
 }
 
@@ -161,106 +142,99 @@ sub abmove {
 
     if (@_) {
         $ply = shift;
-        print "Explicit ply $ply overrides default ($self->{PLY})\n" if $self->{DEBUG};
+        print "Explicit ply $ply overrides default ($self->{ply})\n" if $self->{debug};
     }
     else {
-        $ply = $self->{PLY};
+        $ply = $self->{ply};
     }
 
     my $bestmove;
     my $pos = $self->peek_pos;
-	my @moves = $self->{FINDMOVES}($pos)
+    my @moves = $self->{findmoves}($pos)
         or return;
 
-    my $alpha = $self->{ALPHA};
-    my $beta = $self->{BETA};
+    my $alpha = $self->{alpha};
+    my $beta = $self->{beta};
 
-    print "Searching to depth $ply\n" if $self->{DEBUG};
-    $self->{FOUND_END} = $self->{COUNT} = 0;
-	for my $move (@moves) {
-		my $npos = $self->{MOVE}($pos, $move) or croak "No move returned from MOVE!";
-		my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
+    print "Searching to depth $ply\n" if $self->{debug};
+    $self->{found_end} = $self->{count} = 0;
+    for my $move (@moves) {
+        my $npos = $self->{move}($pos, $move) or croak "No move returned from move!";
+        my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
 
-        print "ab val: $sc" if $self->{DEBUG};
+        print "ab val: $sc" if $self->{debug};
         if ($sc > $alpha) {
-            print " > $alpha new best move" if $self->{DEBUG};
+            print " > $alpha new best move" if $self->{debug};
             $bestmove = $move;
             $alpha = $sc;
         }
-        print "\n" if $self->{DEBUG};
+        print "\n" if $self->{debug};
     }
-    print "$self->{COUNT} visited\n" if $self->{DEBUG};
+    print "$self->{count} visited\n" if $self->{debug};
 
     return unless $bestmove;
     return $self->move($bestmove);
 }
 
 
-=begin internal
-
 =item _alphabeta $pos $alpha $beta $ply
 
-=end
+I<Internal method.>
 
 =cut
 
 sub _alphabeta {
-	my ($self, $pos, $alpha, $beta, $ply) = @_;
+    my ($self, $pos, $alpha, $beta, $ply) = @_;
     my @moves;
 
-	# Keep count of the number of positions we've seen
-	$self->{COUNT}++;
+    # Keep count of the number of positions we've seen
+    $self->{count}++;
 
     # When using iterative deepening we can optimise for the case
     # when we find an end position at every branch (for example,
     # near the end of the game)
-	#
-	if ($self->{ENDOFGAME}($pos)) {
-		$self->{FOUND_END}++;
-		return $self->{EVALUATE}($pos);
-	}
-	elsif ($ply <= 0) {
-		return $self->{EVALUATE}($pos);
-	}
+    #
+    if (($self->{endofgame}($pos) && ++$self->{found_end}) || $ply <= 0) {
+        return $self->{evaluate}($pos);
+    }
 
-    return $self->{EVALUATE}($pos) 
-        unless @moves = $self->{FINDMOVES}($pos);
+    return $self->{evaluate}($pos) 
+        unless @moves = $self->{findmoves}($pos);
 
-	for my $move (@moves) {
-		my $npos = $self->{MOVE}($pos, $move);
-		my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
+    for my $move (@moves) {
+        my $npos = $self->{move}($pos, $move);
+        my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
 
-		$alpha = $sc if $sc > $alpha;
+        $alpha = $sc if $sc > $alpha;
         last unless $alpha < $beta;
-	}
+    }
 
-	return $alpha;
+    return $alpha;
 }
+
+
+1;  # ensure using this module works
+__END__
 
 =back
 
-=end
-
-=cut
-
-1;  # ensure using this module works
-
-__END__
 
 =head1 BUGS
 
-The valid range of values EVALUATE can retun is hardcoded to
+The valid range of values C<evaluate> can return is hardcoded to
 -99_999 - +99_999 at the moment. Probably should provide methods
 to get/set these.
+
+
+=head1 TODO
+
+Implement the missing iterative deepening alphabeta routine. 
 
 
 =head1 SEE ALSO
 
 The author's website for this module: 
-http://brautaset.org/projects/alphabeta/
-
-The author's website for the C library that inspired this module:
-http://brautaset.org/projects/ggtl/
+http://brautaset.org/projects/#games::alphabeta
 
 
 =head1 AUTHOR
