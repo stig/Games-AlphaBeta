@@ -94,7 +94,7 @@ sub new {
 	my $class = ref($invocant) || $invocant;
 	my $self = bless {}, $class;
 
-    $self->_init(@_);
+    $self->_init(@_) or carp "Failed to init object!";
     return $self;
 }
 
