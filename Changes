@@ -2,6 +2,23 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-08-30 21:38:45 GMT	Stig Brautaset <stig@brautaset.org>	patch-9
+
+    Summary:
+      added findmoves() method + valid_move() helper method
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-9
+
+    The findmoves() method returns an array of x/y coordinates
+    which are valid moves for the current player.
+    
+    The valid_move() helper method returns true if the given x/y
+    coordinate is a valid move, undef otherwise. 
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-08-30 20:26:30 GMT	Stig Brautaset <stig@brautaset.org>	patch-8
 
     Summary:
