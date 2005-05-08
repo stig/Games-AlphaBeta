@@ -6,7 +6,7 @@ use warnings;
 
 use Carp;
 
-our $VERSION = '0.1.0';
+our $VERSION = '0.1.1';
 
 =head1 NAME
 
@@ -40,20 +40,15 @@ possible to make use of this class on its own.
 
 =head1 VIRTUAL METHODS
 
-Modules inheriting this class must implement at least these two
-methods (in addition to C<apply()> which is required by
+Modules inheriting this class must implement the following
+methods (in addition to C<apply()> and anything else required by
 L<Games::Sequential::Position>): C<evaluate()> &amp;
-C<findmoves()>. They can additionally override the implementation
-of C<endpos()>, which should be adequate for many games. If you
-chose to not use this class, you must also implement a C<copy()>
-method which makes a deep copy of a position object.
-
-Here's a quick description of how the missing methods must work:
+C<findmoves()>. 
 
 =over 4
 
 =item findmoves()
-    
+
 Return an array of all moves possible for the current player at
 the current position. Don't forget to return a null move if the
 player is allowed to pass; an empty array returned here denotes
@@ -80,38 +75,11 @@ sub evaluate {
 =back
 
 
-=head1 METHODS
+=head1 METHODS 
 
 The following methods are provided by this class.
 
 =over 4
-
-=item _init [@list]
-
-I<Internal method.>
-
-Make sure the missing methods are implemented. You probably want
-to override this though. You might want to call
-C<$self->SUPER::_init(@_)> from within the overriding method.
-
-=cut
-
-sub _init {
-    my $self = shift;
-    $self->SUPER::_init(@_);
-
-    for (qw(endpos evaluate findmoves)) {
-        unless ($self->can($_)) {
-            croak <<'EOF';
-method $_() not implemented. 
-Hint: read the Games::AlphaBeta::Position manpage.
-EOF
-        }
-    }
-
-    return $self;
-}
-
 
 =item endpos
 

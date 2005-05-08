@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-11-14 18:36:44 GMT	Stig Brautaset <stig@brautaset.org>	patch-34
+
+    Summary:
+      removed obsolete _init method
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-34
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Position.pm
+
+
 2004-11-14 18:29:45 GMT	Stig Brautaset <stig@brautaset.org>	patch-33
 
     Summary:
