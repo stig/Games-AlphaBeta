@@ -4,6 +4,7 @@ use Carp;
 
 use strict;
 use warnings;
+use Data::Dumper;
 
 our $VERSION = '0.1';
 
@@ -121,7 +122,6 @@ current player, false otherwise.
 sub valid_move {
     my ($self, $x, $y) = @_;
 
-    return 1        if ($x == $y && $y == -1);  # Null move
     return undef    if $self->{board}[$x][$y];  # Slot must be free
 
     # Define some convenient names.
@@ -235,7 +235,7 @@ sub findmoves {
         }
     }
     # Pass if no available moves
-    @moves = [-1, -1] unless @moves;
+    @moves = undef unless @moves;
     return @moves;
 }
 
@@ -260,6 +260,28 @@ sub evaluate {
 }
 
 
+=item endpos 
+
+Return true if the current position is an end position.
+
+=cut
+
+sub endpos {
+    my $self = shift;
+
+    my $open;
+    my @moves = $self->findmoves;
+
+    if (scalar @moves == 1 && !$moves[0]) {
+        $self->{player} = 3 - $self->{player};
+        @moves = $self->findmoves;
+        $self->{player} = 3 - $self->{player};
+        if (scalar @moves == 1 && !$moves[0]) {
+            return 1;
+        }
+    }
+    return undef;
+}
 
 =item apply $move
 
@@ -270,17 +292,18 @@ Apply a move to the current position, producing the new position.
 sub apply ($) {
     my ($self, $move) = @_;
 
-    my $size    = $self->{size};
-    my $b       = $self->{board};
     my $me      = $self->{player};
     my $not_me  = 3 - $self->{player};
-    my ($x, $y) = @$move;
 
     # null or pass move
-    if ($x == -1 && $y == -1) {
+    unless ($move) {
         $self->{player} = $not_me;
         return $self;
     }
+
+    my $size    = $self->{size};
+    my $b       = $self->{board};
+    my ($x, $y) = @$move;
 
     my ($tx, $ty, $flipped);
 
