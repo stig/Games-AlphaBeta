@@ -6,12 +6,12 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-our $VERSION = '0.1';
+our $VERSION = '0.1.0';
 
 =head1 NAME
 
-Games::AlphaBeta::Reversi - class used with Games::AlphaBeta for
-playing Reversi
+Games::AlphaBeta::Reversi - Reversi position class for use with
+Games::AlphaBeta 
 
 =head1 SYNOPSIS
 
