@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-09-04 18:06:17 GMT	Stig Brautaset <stig@brautaset.org>	patch-27
+
+    Summary:
+      use transliteration (tr///) instead of s///
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-27
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-09-04 17:59:43 GMT	Stig Brautaset <stig@brautaset.org>	patch-26
 
     Summary:

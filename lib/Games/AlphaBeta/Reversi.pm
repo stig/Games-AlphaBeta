@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-our $VERSION = '0.1.0';
+our $VERSION = '0.1.1';
 
 =head1 NAME
 
@@ -99,9 +99,7 @@ sub as_string {
     my $i;
     for (@{$self->{board}}) {
         for (join " ", @$_) {
-            s/0/./g;
-            s/1/o/g;
-            s/2/x/g;
+            tr/012/.ox/;
             $str .= sprintf("%2d | %s\n", ++$i, $_);
         }
     }
