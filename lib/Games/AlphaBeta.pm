@@ -30,6 +30,7 @@ Games::AlphaBeta - game-tree search with object oriented interface
   # Print a position in the game (optional)
   sub draw { ... }
 
+  package main;
   my $pos = Some::Game->new;
   my $game = Games::AlphaBeta->new($pos);
 

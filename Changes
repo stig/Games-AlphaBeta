@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-08-29 13:53:50 GMT	Stig Brautaset <stig@brautaset.org>	patch-3
+
+    Summary:
+      fix small buglet in pod
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-3
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta.pm
+
+
 2004-08-29 13:53:20 GMT	Stig Brautaset <stig@brautaset.org>	patch-2
 
     Summary:
