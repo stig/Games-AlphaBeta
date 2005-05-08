@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-our $VERSION = '0.1.1';
+our $VERSION = '0.1.2';
 
 =head1 NAME
 
@@ -18,7 +18,7 @@ Games::AlphaBeta
     package My::Reversi;
     use base Games::AlphaBeta::Reversi;
 
-    # Override drawing routine
+    # implement drawing routine
     sub draw { ... }
 
     package main;
