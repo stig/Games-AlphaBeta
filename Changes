@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-08-30 20:24:30 GMT	Stig Brautaset <stig@brautaset.org>	patch-7
+
+    Summary:
+      allow different size of board in init
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-7
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-08-30 20:11:38 GMT	Stig Brautaset <stig@brautaset.org>	patch-6
 
     Summary:

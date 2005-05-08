@@ -49,7 +49,8 @@ Initialize the initial state.
 
 sub _init {
     my $self = shift;
-    my $size = 8;
+
+    my $size = shift || 8;
     my $half = abs($size / 2);
     my %config = (
         player => 1,
