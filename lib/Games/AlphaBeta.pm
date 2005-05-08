@@ -24,7 +24,7 @@ Games::AlphaBeta - game-tree search with object oriented interface
 
     # Methods required by Games::AlphaBeta
     sub apply { ... }
-    sub endpos { ... }
+    sub endpos { ... }          # optional
     sub evaluate { ... }
     sub findmoves { ... }
 

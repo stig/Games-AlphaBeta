@@ -18,7 +18,7 @@ Games::AlphaBeta::Position - base Position class for use with Games::AlphaBeta
     use base Games::AlphaBeta::Position;
 
     sub apply { ... }
-    sub endpos { ... }
+    sub endpos { ... }      # optional
     sub evaluate { ... }
     sub findmoves { ... }
 
@@ -57,7 +57,7 @@ an ending position in the game.
 =cut
 
 sub findmoves { 
-    croak "Called pure virtual methdod 'findmoves'\n";
+    croak "Called pure virtual method 'findmoves'\n";
 }
 
 =item evaluate()
@@ -68,7 +68,7 @@ position.
 =cut
 
 sub evaluate { 
-    croak "Called pure virtual methdod 'evaluate'\n";
+    croak "Called pure virtual method 'evaluate'\n";
 }
 
 

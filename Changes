@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-11-20 15:34:51 GMT	Stig Brautaset <stig@brautaset.org>	patch-38
+
+    Summary:
+      minor tweaks to pod + speeling fix
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-38
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta.pm lib/Games/AlphaBeta/Position.pm
+
+
 2004-11-14 19:34:04 GMT	Stig Brautaset <stig@brautaset.org>	patch-37
 
     Summary:
