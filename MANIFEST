@@ -4,3 +4,4 @@ Makefile.PL
 README
 lib/Games/AlphaBeta.pm
 t/01_Games-AlphaBeta.t
+META.yml                                 Module meta-data (added by MakeMaker)

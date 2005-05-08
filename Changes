@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-08-29 13:53:20 GMT	Stig Brautaset <stig@brautaset.org>	patch-2
+
+    Summary:
+      added Yaml metadata
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-2
+
+
+    modified files:
+     Changes MANIFEST
+
+
 2004-08-29 13:51:02 GMT	Stig Brautaset <stig@brautaset.org>	patch-1
 
     Summary:
