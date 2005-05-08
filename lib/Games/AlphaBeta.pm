@@ -1,4 +1,5 @@
 package Games::AlphaBeta;
+use base Games::Sequential;
 use Carp;
 use 5.008003;
 use strict;
@@ -29,12 +30,10 @@ zero-sum game with perfect information. Examples of such games
 include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many, many
 other boardgames. 
 
-The module also provides an undo mechanism, as it keeps track of
-the history of moves.
-
-Users will have to implement (and provide this module with
-pointers to) four callback functions specific to the game they
-are implementing. These are:
+This module inherits most of its methods from Games::Sequential.
+However, users will have to implement (and provide this module
+with pointers to) three more callback functions specific to the
+game they are implementing. The four callbacks required are:
 
 =over 4
 
@@ -74,31 +73,6 @@ indirectly using the supplied callbacks mentioned above.
 
 =over 4
 
-=item new [@list]
-
-Create and return a new AlphaBeta object.
-
-The functions EVALUATE, FINDMOVES, MOVE E<amp> ENDOFGAME
-arguments can be given here. If so, there is no need to call the
-setfuncs() method. Similarly, if a valid starting position is
-given (as INITIALPOS) there is no need to call init() on the
-returned object.
-
-The arguments PLY E<amp> DEBUG can also optionally be set here.
-They can later be changed with their respective accessor methods.
-
-=cut 
-
-sub new {
-	my $invocant = shift;
-	my $class = ref($invocant) || $invocant;
-	my $self = bless {}, $class;
-
-    $self->_init(@_) or carp "Failed to init object!";
-    return $self;
-}
-
-
 =begin internal
 
 =item _init [@list]
@@ -113,24 +87,19 @@ sub _init {
     my $self = shift;
     my $args = @_ && ref($_[0]) ? shift : { @_ };
     my $config = {
-		# Stacks for backtracking
-		POS_HIST	=> [],
-		MOVE_HIST	=> [],
-
 		# Callbacks
 		EVALUATE	=> undef,
 		FINDMOVES	=> undef,
-		MOVE	    => undef,
 		ENDOFGAME	=> undef,
 
         # Runtime variables
         PLY         => 2,       # default search depth
         ALPHA       => -100_000,
         BETA        => 100_000,
-
-		# Debug and statistics
-		DEBUG		=> 0,
 	};
+
+    # Initialise backend
+    $self->SUPER::_init($args);
 
     # Set defaults
     while (my ($key, $val) = each %{ $config }) {
@@ -142,69 +111,12 @@ sub _init {
         if (exists $self->{$key}) {
             $self->{$key} = $val;
         }
-        elsif ($key eq "INITIALPOS") {
-            $self->{POS_HIST} = [ $args->{INITIALPOS} ];
-        }
         else {
             carp "Non-recognised key/value pair: $key/$val\n";
         }
     }
 
 	return $self;
-}
-
-=item init $position
-
-Initialise an object with the starting position of the game. This
-method is required unless ->new() is invoked with an apropriate
-INITIALPOS argument.
-
-=cut
-
-# Set initial position
-sub init {
-    my $self = shift;
-    croak "No initial position given!" unless @_;
-
-    $self->{POS_HIST} = [ shift ];
-    $self->{MOVE_HIST} = [ ];
-
-    return $self->peek_pos;
-}
-
-
-=item setfuncs @list
-
-Set (or change) callback functions. This method is required
-unless ->new() is invoked with the apropriate arguments
-(EVALUATE, FINDMOVES, MOVE E<amp> ENDOFGAME) instead.
-
-=cut
-
-sub setfuncs {
-    my $self = shift;
-    croak "Setfunc called with no arguments!" unless @_;
-
-    my %funcs = @_;
-    foreach (qw/EVALUATE FINDMOVES MOVE ENDOFGAME/) {
-        $self->{$_} = $funcs{$_} if ref($funcs{$_}) eq 'CODE';
-    }
-    return $self;
-}
-
-
-=item debug [$value]
-
-Return current debug level and, if invoked with an argument, set
-to new value.
-
-=cut
-
-sub debug {
-    my $self = shift;
-    my $prev = $self->{DEBUG};
-    $self->{DEBUG} = shift if @_;
-    return $prev;
 }
 
 
@@ -220,67 +132,6 @@ sub ply {
     my $prev = $self->{PLY};
     $self->{PLY} = shift if @_;
     return $prev;
-}
-
-
-=item peek_pos
-
-Return reference to current position.
-Use this for drawing the board etc.
-
-=cut
-
-sub peek_pos {
-    my $self = shift;
-    return $self->{POS_HIST}[-1];
-}
-
-
-=item peek_move
-
-Return reference to last applied move.
-
-=cut
-
-sub peek_move {
-    my $self = shift;
-    return $self->{MOVE_HIST}[-1];
-}
-
-
-=item move $move
-
-Apply $move to the current position, keeping track of history.
-A reference to the new position is returned, or undef on failure.
-
-=cut
-
-sub move {
-    my ($self, $move) = @_;
-    my $pos = $self->peek_pos;
-
-    my $npos = $self->{MOVE}($pos, $move);
-    return unless $npos;
-
-    push @{ $self->{POS_HIST} }, $npos;
-    push @{ $self->{MOVE_HIST} }, $move;
-
-    return $self->peek_pos;
-}
-
-
-=item undo
-
-Undo last move. A reference to the previous position is returned,
-or undef if there was no more moves to undo.
-
-=cut
-
-sub undo {
-    my $self = shift;
-    return unless pop @{ $self->{MOVE_HIST} };
-    pop @{ $self->{POS_HIST} } or carp "Can't pop empty stack";
-    return $self->peek_pos;
 }
 
 
@@ -399,15 +250,6 @@ The valid range of values EVALUATE can retun is hardcoded to
 -99_999 - +99_999 at the moment. Probably should provide methods
 to get/set these.
 
-
-=head1 TODO
-
-This module should be split up into a generic base class for
-alternate-move games and an alphabeta class that inherits from
-it. 
-
-Implement missing methods, e.g.: clone(), snapshot(), save()
-E<amp> resume().
 
 =head1 SEE ALSO
 
