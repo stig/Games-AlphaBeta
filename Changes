@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-11-14 19:34:04 GMT	Stig Brautaset <stig@brautaset.org>	patch-37
+
+    Summary:
+      speed up the Reversi module by not implementing the endpos() method
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-37
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-11-14 19:19:37 GMT	Stig Brautaset <stig@brautaset.org>	patch-36
 
     Summary:

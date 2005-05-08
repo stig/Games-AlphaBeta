@@ -272,30 +272,6 @@ sub evaluate {
 }
 
 
-=item endpos 
-
-Return true if the current position is an end position, or undef
-otherwise.
-
-=cut
-
-sub endpos {
-    my $self = shift;
-
-    my $open;
-    my @moves = $self->findmoves;
-
-    if (scalar @moves == 1 && !$moves[0]) {
-        $self->{player} = 3 - $self->{player};
-        @moves = $self->findmoves;
-        $self->{player} = 3 - $self->{player};
-        if (scalar @moves == 1 && !$moves[0]) {
-            return 1;
-        }
-    }
-    return undef;
-}
-
 =item apply $move
 
 Apply a move to the current position, producing the new position.
