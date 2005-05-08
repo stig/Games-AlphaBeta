@@ -30,9 +30,8 @@ zero-sum game with perfect information. Examples of such games
 include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many, many
 other boardgames. 
 
-Users have to implement (and provide this module with references
-to) four callback functions specific to the game they are
-implementing. The four callbacks required are:
+Users will have to provide references to four callback functions
+specific to the game they are implementing. These are:
 
 =over 4
 

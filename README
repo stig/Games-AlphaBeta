@@ -9,10 +9,6 @@ zero-sum game with perfect information. Examples of such games
 include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many other
 boardgames. 
 
-Users will have to implement (and provide this module with
-pointers to) four callback functions specific to the game they
-are implementing.
-
 This is the initial release.
 
 
