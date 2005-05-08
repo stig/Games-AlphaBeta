@@ -1,6 +1,6 @@
 Changes
-Makefile.PL
 MANIFEST
+Makefile.PL
 README
-t/Games-GGTL.t
-lib/Games/GGTL.pm
+lib/Games/AlphaBeta.pm
+META.yml                                 Module meta-data (added by MakeMaker)

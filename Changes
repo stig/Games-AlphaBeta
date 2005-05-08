@@ -1,4 +1,9 @@
-Revision history for Perl extension Games::GGTL.
+Revision history for Perl extension Games::AlphaBeta.
+
+0.03  Mon May 24 20:46:33 BST 2004
+	- renamed to Games::AlphaBeta
+	- renamed method aimove -> abmove
+	- improved pod
 
 0.02  Sun May 23 16:02:21 2004
 	- renamed internal method; added to POD

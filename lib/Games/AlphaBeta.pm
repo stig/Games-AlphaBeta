@@ -1,36 +1,40 @@
-package Games::GGTL;
-
+package Games::AlphaBeta;
+use Carp;
 use 5.008003;
 use strict;
 use warnings;
 
-use Carp;
-
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 NAME
 
-Games::GGTL - AlphaBeta game-tree search with object oriented interface
+Games::AlphaBeta - game-tree search with object oriented interface
 
 =head1 SYNOPSIS
 
-  use Games::GGTL;
-  my $game = Games::GGTL->new( ... );
+  use Games::AlphaBeta;
+  my $game = Games::AlphaBeta->new( ... );
   
-  while ($game->aimove) {
+  while ($game->abmove) {
           print draw($game->peek_pos);
   }
 
 =head1 DESCRIPTION
 
-GGTL exists to help people create computer games, in particular
-2-player, zero-sum games with perfect information. Examples of
-such games include Chess, Othello, Connect4, Tic-Tac-Toe, Go and
-a whole slew of other boardgames. For such games GGTL provides
-AlphaBeta game-tree search.
+Games::AlphaBeta provides a generic implementation of the
+AlphaBeta game-tree search algorithm (also known as MiniMax
+search with alpha beta pruning). This algorithm can be used to
+find the best move at a particular position in any two-player,
+zero-sum game with perfect information. Examples of such games
+include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many, many
+other boardgames. 
 
-Users of the module will have to implement 4 callback functions
-specific to the game in question. These are:
+The module also provides an undo mechanism, as it keeps track of
+the history of moves.
+
+Users will have to implement (and provide this module with
+pointers to) four callback functions specific to the game they
+are implementing. These are:
 
 =over 4
 
@@ -65,19 +69,19 @@ the current player. The value must be in the range -99_999 -
 =head1 METHODS
 
 Users must not modify the referred-to values of references
-returned by any of GGTL's methods, except, of course, indirectly
-using the methods described below.
+returned by any of the below methods, except, of course,
+indirectly using the supplied callbacks mentioned above.
 
 =over 4
 
 =item new [@list]
 
-Create and return a new GGTL object.
+Create and return a new AlphaBeta object.
 
 The functions EVALUATE, FINDMOVES, MOVE E<amp> ENDOFGAME
 arguments can be given here. If so, there is no need to call the
 setfuncs() method. Similarly, if a valid starting position is
-given (as STARTPOS) there is no need to call init() on the
+given (as INITIALPOS) there is no need to call init() on the
 returned object.
 
 The arguments PLY E<amp> DEBUG can also optionally be set here.
@@ -99,7 +103,7 @@ sub new {
 
 =item _init [@list]
 
-Initialize a GGTL object.
+Initialize a AlphaBeta object.
 
 =end
 
@@ -142,16 +146,16 @@ sub _init {
             carp "Non-recognised key/value pair: $key/$val\n";
         }
     }
-    $self->{POS_HIST} = [ $args->{STARTPOS} ] if exists($args->{STARTPOS});
+    $self->{POS_HIST} = [ $args->{INITIALPOS} ] if exists($args->{INITIALPOS});
 
 	return $self;
 }
 
 =item init $position
 
-Initialise a GGTL object with the starting position of the game.
-This method is required, unless ->new() is invoked with an
-apropriate STARTPOS argument.
+Initialise an object with the starting position of the game. This
+method is required unless ->new() is invoked with an apropriate
+INITIALPOS argument.
 
 =cut
 
@@ -161,7 +165,7 @@ sub init {
     croak "No initial position given!" unless @_;
 
     $self->{POS_HIST} = [ shift ];
-    $self->{MOVE_HIST} = undef;
+    $self->{MOVE_HIST} = [ ];
 
     return $self->peek_pos;
 }
@@ -169,7 +173,7 @@ sub init {
 
 =item setfuncs @list
 
-Set (or change) callback functions. This method is required,
+Set (or change) callback functions. This method is required
 unless ->new() is invoked with the apropriate arguments
 (EVALUATE, FINDMOVES, MOVE E<amp> ENDOFGAME) instead.
 
@@ -278,12 +282,13 @@ sub undo {
 }
 
 
-=item aimove [$ply]
+=item abmove [$ply]
 
-Perform MiniMax search with Alpha-Beta pruning to depth $ply. If
-$ply is not specified, the default depth is used (see ply()). 
-The best move found is performed and a reference to the resulting
-position is returned. undef is returned on failure.
+Perform the best move found after an AlphaBeta game-tree search
+to depth $ply. If $ply is not specified, the default depth is
+used (see ply()). The best move found is performed and a
+reference to the resulting position is returned. undef is
+returned on failure.
 
 Note that this function can take a long time if $ply is high,
 particularly if the game in question has many possible moves at
@@ -294,7 +299,7 @@ progresses.
 
 =cut
 
-sub aimove {
+sub abmove {
     my $self = shift;
     my $ply;
 
@@ -394,16 +399,17 @@ to get/set these.
 
 =head1 TODO
 
+This module should be split up into a generic base class for
+alternate-move games and an alphabeta class that inherits from
+it. 
+
 Implement missing methods, e.g.: clone(), snapshot(), save()
 E<amp> resume().
-
-Fix bugs.
-
 
 =head1 SEE ALSO
 
 The author's website for this module: 
-http://brautaset.org/projects/ggtl-perl/
+http://brautaset.org/projects/alphabeta/
 
 The author's website for the C library that inspired this module:
 http://brautaset.org/projects/ggtl/
