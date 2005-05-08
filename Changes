@@ -2,6 +2,19 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-08-30 20:11:38 GMT	Stig Brautaset <stig@brautaset.org>	patch-6
+
+    Summary:
+      added ->as_string() to Reversi class
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-6
+
+    This method returns the current game position as a string.
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-08-30 14:54:03 GMT	Stig Brautaset <stig@brautaset.org>	patch-5
 
     Summary:

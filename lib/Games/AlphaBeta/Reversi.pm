@@ -77,6 +77,38 @@ sub _init {
     return $self;
 }
 
+=item as_string
+
+Return a plain-text representation of the current game position
+as a string.
+
+=cut
+
+sub as_string {
+    my $self = shift;
+
+    # Header
+    my ($c, $str) = "a";
+    $str .= " " . $c++ for (1 .. $self->{size});
+    $str  = sprintf("    %s\n", $str);
+    $str .= sprintf("   +%s\n", "--" x $self->{size});
+
+    # Actual board (with numbers down the left side)
+    my $i;
+    for (@{$self->{board}}) {
+        for (join " ", @$_) {
+            s/0/./g;
+            s/1/o/g;
+            s/2/x/g;
+            $str .= sprintf("%2d | %s\n", ++$i, $_);
+        }
+    }
+    
+    # Footer
+    $str .= "Player " . $self->{player} . " to move.\n";
+    return $str;
+}
+    
 =item apply $move
 
 Apply a move to the current position, producing the new position.
