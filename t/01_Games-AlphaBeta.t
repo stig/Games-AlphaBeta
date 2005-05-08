@@ -7,11 +7,11 @@
 package My::Pos;
 use base Games::Sequential::Position;
 
-sub _init {
+sub init {
     my $self = shift;
     $self->{player} = 1;
     $self->{val}    = 0;
-    return $self->SUPER::_init(@_);
+    return $self->SUPER::init(@_);
 }
 
 sub apply {

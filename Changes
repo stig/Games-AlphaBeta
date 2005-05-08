@@ -2,6 +2,19 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-12-10 23:45:34 GMT	Stig Brautaset <stig@brautaset.org>	patch-41
+
+    Summary:
+      use updated version of Games::Sequential::Position
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-41
+
+
+    modified files:
+     Changes MANIFEST Makefile.PL lib/Games/AlphaBeta/Reversi.pm
+     t/01_Games-AlphaBeta.t
+
+
 2004-11-20 15:40:38 GMT	Stig Brautaset <stig@brautaset.org>	patch-40
 
     Summary:

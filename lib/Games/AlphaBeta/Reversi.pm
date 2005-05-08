@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-our $VERSION = '0.1.3';
+our $VERSION = '0.1.4';
 
 =head1 NAME
 
@@ -46,16 +46,14 @@ described here.
 
 =over 4
 
-=item _init()
+=item init()
 
-I<Internal method.>
-
-Initialize the initial state. Call SUPER::_init(@_) to do part of
+Initialize the initial state. Call SUPER::init(@_) to do part of
 the work.
 
 =cut
 
-sub _init {
+sub init {
     my $self = shift;
 
     my $size = shift || 8;
@@ -82,7 +80,7 @@ sub _init {
 
     @$self{keys %config} = values %config;
 
-    $self->SUPER::_init(@_) or croak "failed to call SUPER:_init()";
+    $self->SUPER::init(@_) or croak "failed to call SUPER:init()";
     return $self;
 }
 
