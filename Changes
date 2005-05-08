@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-09-03 23:52:00 GMT	Stig Brautaset <stig@brautaset.org>	patch-23
+
+    Summary:
+      only invoke the version-incrementor-script on devo branch
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-23
+
+
+    modified files:
+     Changes {arch}/=hook
+
+
 2004-09-03 23:07:55 GMT	Stig Brautaset <stig@brautaset.org>	patch-22
 
     Summary:
