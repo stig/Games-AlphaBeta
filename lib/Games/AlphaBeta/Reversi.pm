@@ -4,7 +4,6 @@ use Carp;
 
 use strict;
 use warnings;
-use Data::Dumper;
 
 our $VERSION = '0.1.4';
 

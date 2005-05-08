@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-12-10 23:52:10 GMT	Stig Brautaset <stig@brautaset.org>	patch-42
+
+    Summary:
+      drop "use Data::Dumper" line since it is not used
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-42
+
+
+    modified files:
+     Changes lib/Games/AlphaBeta/Reversi.pm
+
+
 2004-12-10 23:45:34 GMT	Stig Brautaset <stig@brautaset.org>	patch-41
 
     Summary:
