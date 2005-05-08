@@ -285,7 +285,7 @@ sub apply ($) {
     my ($tx, $ty, $flipped);
 
     # slot must not be outside the board, or already occupied
-    if ($x < 0 || $x > $size || $y < 0 || $y > $size) {
+    if ($x < 0 || $x >= $size || $y < 0 || $y >= $size) {
         return undef;
     }
     elsif ($b->[$x][$y]) {
