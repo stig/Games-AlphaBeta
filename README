@@ -1,4 +1,4 @@
-Games::AlphaBeta version 0.03
+Games::AlphaBeta version 0.01
 =============================
 
 Games::AlphaBeta provides a generic implementation of the
@@ -6,8 +6,8 @@ AlphaBeta game-tree search algorithm (also known as MiniMax
 search with alpha beta pruning). This algorithm can be used to
 find the best move at a particular position in any two-player,
 zero-sum game with perfect information. Examples of such games
-include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many, many
-other boardgames. 
+include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many other
+boardgames. 
 
 Users will have to implement (and provide this module with
 pointers to) four callback functions specific to the game they
