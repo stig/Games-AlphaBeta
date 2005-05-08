@@ -239,6 +239,28 @@ sub findmoves {
     return @moves;
 }
 
+
+=item evaluate
+
+Evaluate a game position.
+
+=cut
+
+sub evaluate {
+    my $self = shift;
+    my $player = $self->{player};
+    my ($me, $not_me);
+
+    $me = scalar $self->findmoves;
+    $self->{player} = 3 - $player;
+    $not_me = scalar $self->findmoves;
+    $self->{player} = $player;
+
+    return $me - $not_me;
+}
+
+
+
 =item apply $move
 
 Apply a move to the current position, producing the new position.
