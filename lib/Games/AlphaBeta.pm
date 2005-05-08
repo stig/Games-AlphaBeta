@@ -2,10 +2,12 @@ package Games::AlphaBeta;
 use base Games::Sequential;
 use Carp;
 use 5.006001;
+
 use strict;
 use warnings;
 
-our $VERSION = '0.3.0';
+
+our $VERSION = '0.4.0';
 
 =head1 NAME
 
@@ -13,8 +15,11 @@ Games::AlphaBeta - game-tree search with object oriented interface
 
 =head1 SYNOPSIS
 
-  package Games::AlphaBeta::TTT;
-  use base Games::AlphaBeta;
+  package Some::Game;
+  use base Games::Sequential::Position;
+
+  # initialise starting position
+  sub _init { ... }
 
   # Methods required by Games::AlphaBeta
   sub apply { ... }
@@ -22,10 +27,11 @@ Games::AlphaBeta - game-tree search with object oriented interface
   sub evaluate { ... }
   sub findmoves { ... }
 
-  # Print a position in the game
+  # Print a position in the game (optional)
   sub draw { ... }
 
-  my $game = Games::AlphaBeta::TTT->new or die "No game for you!";
+  my $pos = Some::Game->new;
+  my $game = Games::AlphaBeta->new($pos);
 
   while ($game->abmove) {
       print draw($game->peek_pos);
@@ -41,32 +47,39 @@ zero-sum game with perfect information. Examples of such games
 include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many, many
 other boardgames. 
 
-=head1 DOMAIN-SPECIFIC METHODS
-
-Users must inherit from this module and implement four methods
-particular to the game in question. These are:
+Users must pass an object representing the initial state of the
+game as the first argument to ->new(). This object *must* provide
+the following five methods: C<copy()>, C<apply()>, C<endpos()>,
+C<evaluate()> and C<findmoves()>. You can use
+Games::Sequential::Position as a base class, in which case the
+C<copy()> method will be provided for you. Here's a short
+description of what each of the required methods of the position
+object:
 
 =over 4
 
-=item apply($position, $move)
+=item copy()
 
-Create $newpos as copy of $position and apply $move to it.
-Return $newpos. 
+Return a deep copy of the object.
 
-=item endpos($position)
+=item apply($move)
 
-Returns true if $position is an end position (a win for one of
-the players or a draw) and false otherwise. 
+Apply $move to the position producing the next position. 
 
-=item findmoves($position)
+=item endpos()
+
+Returns true if the position is an end position, i.e. either a
+draw or a win for one of the players, and false otherwise. 
+
+=item findmoves()
 
 Returns a list of all legal moves the current player can perform
-at the current $position. Note that if a pass move is legal in
+at the current position. Note that if a pass move is legal in
 the game (i.e. as it is in Othello) you must allow for this
 function to produce a null move. A null move does nothing but
 pass the turn to the next player.
 
-=item evaluate($position)
+=item evaluate()
 
 Returns the calculated fitness value of the current position for
 the current player. The value must be in the range -99_999 -
@@ -78,13 +91,8 @@ the current player. The value must be in the range -99_999 -
 =head1 METHODS
 
 Most of this module's methods are inherited from
-Games::Sequential; be sure to check its documentation. 
-
-Users must not modify the referred-to values of references
-returned by any of the below methods, except, of course,
-indirectly using the supplied callbacks.
-
-Games::AlphaBeta provides these new methods:
+Games::Sequential; be sure to check its documentation. The
+methods unique to Games::AlphaBeta are described below.
 
 =over 4
 
@@ -106,12 +114,14 @@ sub _init {
     );
 
     @$self{keys %config} = values %config;
+    $self->SUPER::_init(@_);
 
-    croak "no endpos() method defined" unless $self->can("endpos");
-    croak "no evaluate() method defined" unless $self->can("evaluate");
-    croak "no findmoves() method defined" unless $self->can("findmoves");
+    my $pos = $self->peek_pos;
+    croak "no endpos() method defined" unless $pos->can("endpos");
+    croak "no evaluate() method defined" unless $pos->can("evaluate");
+    croak "no findmoves() method defined" unless $pos->can("findmoves");
 
-    return $self->SUPER::_init(@_);
+    return $self;
 }
 
 
@@ -161,7 +171,7 @@ sub abmove {
 
     my $bestmove;
     my $pos = $self->peek_pos;
-    my @moves = $self->findmoves($pos)
+    my @moves = $pos->findmoves 
         or return;
 
     my $alpha = $self->{alpha};
@@ -170,8 +180,10 @@ sub abmove {
     print "Searching to depth $ply\n" if $self->{debug};
     $self->{found_end} = $self->{count} = 0;
     for my $move (@moves) {
-        my $npos = $self->apply($pos, $move) or croak "No move returned from apply()!";
-        my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
+        my ($npos, $sc);
+        $npos = $pos->copy;
+        $npos->apply($move) or croak "apply() failed";
+        $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
 
         print "ab val: $sc" if $self->{debug};
         if ($sc > $alpha) {
@@ -205,17 +217,19 @@ sub _alphabeta {
     # when we find an end position at every branch (for example,
     # near the end of the game)
     #
-    if (($self->endpos($pos) && ++$self->{found_end}) || $ply <= 0) {
-        return $self->evaluate($pos);
+    if (($pos->endpos && ++$self->{found_end}) || $ply <= 0) {
+        return $pos->evaluate;
     }
 
-    return $self->evaluate($pos) 
-        unless @moves = $self->findmoves($pos);
+    return $pos->evaluate
+        unless @moves = $pos->findmoves;
 
     for my $move (@moves) {
-        my $npos = $self->apply($pos, $move) or 
-            croak "apply() returned invalid position!";
-        my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
+        my ($npos, $sc);
+        $npos = $pos->copy or croak "$pos->copy() failed";
+        $npos->apply($move) or croak "$pos->apply() failed";
+
+        $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
 
         $alpha = $sc if $sc > $alpha;
         last unless $alpha < $beta;
@@ -245,8 +259,8 @@ Implement the missing iterative deepening alphabeta routine.
 
 =head1 SEE ALSO
 
-The author's website for this module: 
-http://brautaset.org/projects/#games::alphabeta
+The author's website, describing this and other projects:
+http://brautaset.org/projects/
 
 
 =head1 AUTHOR
@@ -263,4 +277,4 @@ at your option, any later version of Perl 5 you may have available.
 
 =cut
 
-# vim: shiftwidth=4 tabstop=4 softtabstop=4 expandtab 
+# vim: shiftwidth=4 tabstop=4 softtabstop=6 expandtab 

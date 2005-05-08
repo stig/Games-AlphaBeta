@@ -3,7 +3,4 @@ MANIFEST
 Makefile.PL
 README
 lib/Games/AlphaBeta.pm
-lib/Games/Sequential.pm
-t/01_Games-Sequential.t
-t/02_Games-AlphaBeta.t
-META.yml                                 Module meta-data (added by MakeMaker)
+t/01_Games-AlphaBeta.t
