@@ -5,16 +5,19 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 17;
-BEGIN { use_ok('Games::AlphaBeta') };
+package Games::AlphaBeta::Test;
+use Test::More tests => 16;
+BEGIN { 
+  use base Games::AlphaBeta;
+}
 
 #########################
 
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-sub move {
-    my ($p, $m) = @_;
+sub apply {
+    my ($self, $p, $m) = @_;
 
     $m = -$m if $p->{player} == 2;
     my $np = {
@@ -24,8 +27,13 @@ sub move {
     return $np;
 }
 
+sub endpos {
+    my ($self, $p) = @_;
+    return $p->{val} > 30 ? 1 : 0;
+}
+
 sub evaluate {
-    my $p = shift;
+    my ($self, $p) = @_;
     return $p->{val};
 }
 
@@ -33,19 +41,13 @@ sub findmoves {
     return (0, 1, -1, 0);
 }
 
-sub eog {
-    $p = shift;
-    return $p->{val} > 30 ? 1 : 0;
-}
-
 my $p = {
         player => 1,
         val => 0
 };
-ok(my $g = Games::AlphaBeta->new($p, {
-            move => \&move, evaluate => \&evaluate, 
-            findmoves => \&findmoves, endofgame => \&eog
-        }), "Constructor");
+
+my $g;
+ok($g = Games::AlphaBeta::Test->new($p), "Constructor");
 can_ok($g, qw/abmove ply/);
 
 isa_ok($g, Games::AlphaBeta);

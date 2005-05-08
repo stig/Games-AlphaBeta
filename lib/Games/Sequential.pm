@@ -4,61 +4,65 @@ use 5.006001;
 use strict;
 use warnings;
 
-our $VERSION = '0.2.2';
+our $VERSION = '0.3.0';
 
 =head1 NAME
 
-Games::Sequential - framework for sequential games with object oriented interface
+Games::Sequential - sequential games framework with OO interface
 
 =head1 SYNOPSIS
 
-  use Games::Sequential;
-  my $game = Games::Sequential->new($initialpos, move => \&move );
+  package Games::Sequential::SomethingOrOther;
+  use base Games::Sequential;
 
+  sub apply { ... }
+
+  my $game = Games::Sequential::SomethingOrOther->new($initialpos);
   $game->debug(1);
 
-  $game->move($move);
+  $game->move($mv);
   $game->undo;
 
 
 =head1 DESCRIPTION
 
 Games::Sequential provides a simple base class for sequential
-games. The module provides an undo mechanism, as it keeps track
-of the history of moves, in addition to methods to clone a game
-state with or without history.
+games. It provides an undo mechanism, as it keeps track of the
+history of moves, in addition to methods to clone a game state
+with or without history.
 
-Users will have to provide this module with a reference to a
-callback function to perform a move in the game they are
-implementing. This callback is:
+=head1 DOMAIN-SPECIFIC METHODS
 
-=over 4
+Users must inherit from this module and implement an C<apply>
+method particular to the game in question. This method takes care
+of creating a new position by copying the current position and
+applying the provided move to it. 
 
-=item C<move> $position, $move
+The method will probably look something along these lines (sans
+error checking):
 
-Create $newpos as copy of $position and apply $move to it.
-Return $newpos.
+  sub apply {
+    my ($self, $pos, $move) = @_;
+    my $newpos = copy_pos($pos);
 
-=back
+    ... apply $move to $newpos ...
+
+    return $newpos;
+  }
 
 
 =head1 METHODS
 
 Users must not modify the referred-to values of references
-returned by any of the below methods, except, of course,
-indirectly using the supplied callbacks mentioned above.
+returned by any of the below methods.
 
 =over 4
 
-=item new [@list]
+=item new $initialpos [@list]
 
-Create and return a new AlphaBeta object.
-
-The function C<move> can be given as an argument to this
-function. If so, there is no need to call the C<setfuncs()>
-method. Similarly, if a valid starting position is given (as
-C<initialpos>) there is no need to call init() on the returned
-object. The C<debug> option can also be set here. 
+Create and return a new AlphaBeta object. The first argument must
+be the initial position of the game. The C<debug> option can also
+be set here. 
 
 =cut 
 
@@ -76,7 +80,7 @@ sub new {
 
 I<Internal method>
 
-Initialize a AlphaBeta object.
+Initialize an AlphaBeta object.
 
 =cut
 
@@ -90,9 +94,6 @@ sub _init {
         pos_hist    => [ $pos ],
         move_hist   => [],
 
-        # Callbacks
-        move        => undef,
-
         # Debug and statistics
         debug       => 0,
     );
@@ -105,25 +106,6 @@ sub _init {
         $self->{$key} = $val if exists $self->{$key};
     }
 
-    return $self;
-}
-
-
-=item setfuncs @list
-
-Set (or change) callback functions. This method is required
-unless ->new() is invoked with MOVE as an argument.
-
-=cut
-
-sub setfuncs {
-    my $self = shift;
-    croak "Setfuncs called with no arguments!" unless @_;
-    my $args = @_ && ref($_[0]) ? shift : { @_ };
-
-    while (my ($key, $val) = each %{ $self }) {
-        $self->{$key} = $args->{$key} if ref($args->{$key}) eq 'CODE';
-    }
     return $self;
 }
 
@@ -179,8 +161,8 @@ sub move {
     my ($self, $move) = @_;
     my $pos = $self->peek_pos;
 
-    my $npos = $self->{move}($pos, $move);
-    return unless $npos;
+    my $npos = $self->apply($pos, $move)
+        or croak "apply() failed";
 
     push @{ $self->{pos_hist} }, $npos;
     push @{ $self->{move_hist} }, $move;
@@ -199,7 +181,8 @@ or undef if there was no more moves to undo.
 sub undo {
     my $self = shift;
     return unless pop @{ $self->{move_hist} };
-    pop @{ $self->{pos_hist} } or carp "Can't pop empty stack";
+    pop @{ $self->{pos_hist} } 
+        or croak "move and pos stack out of sync!";
     return $self->peek_pos;
 }
 

@@ -13,8 +13,19 @@ Games::AlphaBeta - game-tree search with object oriented interface
 
 =head1 SYNOPSIS
 
-  use Games::AlphaBeta;
-  my $game = Games::AlphaBeta->new( ... );
+  package Games::AlphaBeta::TTT;
+  use base Games::AlphaBeta;
+
+  # Methods required by Games::AlphaBeta
+  sub apply { ... }
+  sub endpos { ... }
+  sub evaluate { ... }
+  sub findmoves { ... }
+
+  # Print a position in the game
+  sub draw { ... }
+
+  my $game = Games::AlphaBeta::TTT->new or die "No game for you!";
 
   while ($game->abmove) {
       print draw($game->peek_pos);
@@ -30,15 +41,22 @@ zero-sum game with perfect information. Examples of such games
 include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many, many
 other boardgames. 
 
-Users will have to provide references to four callback functions
-specific to the game they are implementing. These are:
+=head1 DOMAIN-SPECIFIC METHODS
+
+Users must inherit from this module and implement four methods
+particular to the game in question. These are:
 
 =over 4
 
-=item move($position, $move)
+=item apply($position, $move)
 
 Create $newpos as copy of $position and apply $move to it.
-Return $newpos.
+Return $newpos. 
+
+=item endpos($position)
+
+Returns true if $position is an end position (a win for one of
+the players or a draw) and false otherwise. 
 
 =item findmoves($position)
 
@@ -47,12 +65,6 @@ at the current $position. Note that if a pass move is legal in
 the game (i.e. as it is in Othello) you must allow for this
 function to produce a null move. A null move does nothing but
 pass the turn to the next player.
-
-=item endofgame($position)
-
-Returns true if $position is the end of the game, false
-otherwise. Remember to account for a draw in addition to either
-of the players winning. 
 
 =item evaluate($position)
 
@@ -87,11 +99,6 @@ Initialize an AlphaBeta object.
 sub _init {
     my $self = shift;
     my %config = (
-        # Callbacks
-        evaluate    => undef,
-        findmoves   => undef,
-        endofgame   => undef,
-
         # Runtime variables
         ply         => 2,       # default search depth
         alpha       => -100_000,
@@ -150,7 +157,7 @@ sub abmove {
 
     my $bestmove;
     my $pos = $self->peek_pos;
-    my @moves = $self->{findmoves}($pos)
+    my @moves = $self->findmoves($pos)
         or return;
 
     my $alpha = $self->{alpha};
@@ -159,7 +166,7 @@ sub abmove {
     print "Searching to depth $ply\n" if $self->{debug};
     $self->{found_end} = $self->{count} = 0;
     for my $move (@moves) {
-        my $npos = $self->{move}($pos, $move) or croak "No move returned from move!";
+        my $npos = $self->apply($pos, $move) or croak "No move returned from apply()!";
         my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
 
         print "ab val: $sc" if $self->{debug};
@@ -194,15 +201,16 @@ sub _alphabeta {
     # when we find an end position at every branch (for example,
     # near the end of the game)
     #
-    if (($self->{endofgame}($pos) && ++$self->{found_end}) || $ply <= 0) {
-        return $self->{evaluate}($pos);
+    if (($self->endpos($pos) && ++$self->{found_end}) || $ply <= 0) {
+        return $self->evaluate($pos);
     }
 
-    return $self->{evaluate}($pos) 
-        unless @moves = $self->{findmoves}($pos);
+    return $self->evaluate($pos) 
+        unless @moves = $self->findmoves($pos);
 
     for my $move (@moves) {
-        my $npos = $self->{move}($pos, $move);
+        my $npos = $self->apply($pos, $move) or 
+            croak "apply() returned invalid position!";
         my $sc = -$self->_alphabeta($npos, -$beta, -$alpha, $ply - 1);
 
         $alpha = $sc if $sc > $alpha;
