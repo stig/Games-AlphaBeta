@@ -6,7 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 package Games::AlphaBeta::Test;
-use Test::More tests => 16;
+use Test::More tests => 14;
 BEGIN { 
   use base Games::AlphaBeta;
 }
@@ -47,26 +47,22 @@ my $p = {
 };
 
 my $g;
-ok($g = Games::AlphaBeta::Test->new($p), "Constructor");
-can_ok($g, qw/abmove ply/);
-
+ok($g = Games::AlphaBeta::Test->new($p),  "new(\$pos)");
 isa_ok($g, Games::AlphaBeta);
 isa_ok($g, Games::Sequential);
 
-is($g->debug(1), 0, "debug");
-is($g->debug, 1, "debug read");
+can_ok($g, qw/apply endpos evaluate findmoves abmove ply/);
 
-ok($g->abmove(4), "abmove");
-ok($p = $g->peek_pos, "peek pos");
-is($g->peek_move, 1, "move");
-is($p->{player}, 2, "player turn");
-is($p->{val}, 1, "best value");
+ok($g->abmove(4),       "abmove(4)");
+ok($p = $g->peek_pos,   "peek_pos()");
+is($g->peek_move, 1,    "peek_move()");
+is($p->{player}, 2,     "check player turn");
+is($p->{val}, 1,        "check best value");
 
+is($g->ply(3), 2,       "set & read ply");
+ok($g->abmove,          "abmove()");
 
-is($g->ply(3), 2, "set & read ply");
-ok($g->abmove, "abmove (2)");
-
-is($p->{player}, 2, "player turn (2)");
-is($p->{val}, 1, "current value");
-is($g->peek_move, 1, "move (2)");
+is($p->{player}, 2,     "check player turn");
+is($p->{val}, 1,        "current value");
+is($g->peek_move, 1,    "peek_move()");
 

@@ -2,6 +2,28 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.3
 #
 
+2004-08-25 19:38:43 GMT	Stig Brautaset <stig@brautaset.org>	patch-9
+
+    Summary:
+      cleaned up tests and renamed them to change their order
+    Revision:
+      Games-AlphaBeta--devo--0.3--patch-9
+
+
+    modified files:
+     Changes t/01_Games-Sequential.t t/02_Games-AlphaBeta.t
+
+    renamed files:
+     t/.arch-ids/Games-AlphaBeta.t.id
+       ==> t/.arch-ids/02_Games-AlphaBeta.t.id
+     t/.arch-ids/Games-Sequential.t.id
+       ==> t/.arch-ids/01_Games-Sequential.t.id
+     t/Games-AlphaBeta.t
+       ==> t/02_Games-AlphaBeta.t
+     t/Games-Sequential.t
+       ==> t/01_Games-Sequential.t
+
+
 2004-08-25 19:13:27 GMT	Stig Brautaset <stig@brautaset.org>	patch-8
 
     Summary:
