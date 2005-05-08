@@ -2,6 +2,22 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.3
 #
 
+2004-08-24 23:46:40 GMT	Stig Brautaset <stig@brautaset.org>	patch-3
+
+    Summary:
+      added Games::Sequential + test
+    Revision:
+      Games-AlphaBeta--devo--0.3--patch-3
+
+
+    new files:
+     lib/Games/.arch-ids/Sequential.pm.id lib/Games/Sequential.pm
+     t/.arch-ids/Games-Sequential.t.id t/Games-Sequential.t
+
+    modified files:
+     Changes
+
+
 2004-08-24 22:34:00 GMT	Stig Brautaset <stig@brautaset.org>	patch-2
 
     Summary:
