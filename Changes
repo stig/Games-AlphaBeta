@@ -2,6 +2,25 @@
 # arch-tag: automatic-ChangeLog--stig@brautaset.org--2004/Games-AlphaBeta--devo--0.4
 #
 
+2004-11-20 15:40:38 GMT	Stig Brautaset <stig@brautaset.org>	patch-40
+
+    Summary:
+      added example of self-playing Othello game
+    Revision:
+      Games-AlphaBeta--devo--0.4--patch-40
+
+
+    new files:
+     examples/.arch-ids/=id examples/.arch-ids/othello.pl.id
+     examples/othello.pl
+
+    modified files:
+     Changes MANIFEST README
+
+    new directories:
+     examples examples/.arch-ids
+
+
 2004-11-20 15:36:14 GMT	Stig Brautaset <stig@brautaset.org>	patch-39
 
     Summary:

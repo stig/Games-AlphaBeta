@@ -1,10 +1,13 @@
-Games::AlphaBeta & Games::AlphaBeta::Position
-=============================================
+Games::AlphaBeta
+================
 
-These modules provide a generic framework for implementing games
-where the MiniMax/AlphaBeta game-tree search can be used.
-Examples of games that fall into this category include Chess,
-Othello, Connect4, Go, Tic-Tac-Toe and many other boardgames. 
+The modules in this distribution provides a generic framework for
+implementing games where the MiniMax/AlphaBeta game-tree search
+can be used. Examples of games that fall into this category
+include Chess, Othello, Connect4, Go, Tic-Tac-Toe and many other
+boardgames. 
+
+An example self-playing Othello game is provided.
 
 
 INSTALLATION

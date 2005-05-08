@@ -2,6 +2,7 @@ Changes
 MANIFEST
 Makefile.PL
 README
+examples/othello.pl
 lib/Games/AlphaBeta.pm
 lib/Games/AlphaBeta/Position.pm
 lib/Games/AlphaBeta/Reversi.pm
