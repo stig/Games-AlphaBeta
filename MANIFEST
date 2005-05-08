@@ -1,7 +1,9 @@
 Changes
 MANIFEST
+META.yml
 Makefile.PL
 README
 lib/Games/AlphaBeta.pm
+lib/Games/AlphaBeta/Reversi.pm
 t/01_Games-AlphaBeta.t
-META.yml                                 Module meta-data (added by MakeMaker)
+t/02_Games-AlphaBeta-Reversi.t
