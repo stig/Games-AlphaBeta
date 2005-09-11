@@ -1,5 +1,5 @@
 package Games::AlphaBeta::Position;
-use base Games::Sequential::Position;
+use base qw(Games::Sequential::Position);
 
 use strict;
 use warnings;
@@ -15,7 +15,7 @@ Games::AlphaBeta::Position - base Position class for use with Games::AlphaBeta
 =head1 SYNOPSIS
 
     package My::GamePos;
-    use base Games::AlphaBeta::Position;
+    use base qw(Games::AlphaBeta::Position);
 
     sub apply { ... }
     sub endpos { ... }      # optional

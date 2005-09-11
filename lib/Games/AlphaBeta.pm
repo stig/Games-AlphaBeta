@@ -1,5 +1,5 @@
 package Games::AlphaBeta;
-use base Games::Sequential;
+use base qw(Games::Sequential);
 
 use Carp;
 use 5.006001;
@@ -17,7 +17,7 @@ Games::AlphaBeta - game-tree search with object oriented interface
 =head1 SYNOPSIS
 
     package My::GamePos;
-    use base Games::AlphaBeta::Position;
+    use base qw(Games::AlphaBeta::Position);
 
     # initialise starting position
     sub _init { ... }
@@ -28,7 +28,7 @@ Games::AlphaBeta - game-tree search with object oriented interface
     sub evaluate { ... }
     sub findmoves { ... }
 
-    # Print a position in the game (optional)
+    # Draw a position in the game (optional)
     sub draw { ... }
 
     package main;

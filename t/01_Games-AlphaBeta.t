@@ -5,7 +5,7 @@
 #########################
 
 package My::Pos;
-use base Games::Sequential::Position;
+use base qw(Games::Sequential::Position);
 
 sub init {
     my $self = shift;

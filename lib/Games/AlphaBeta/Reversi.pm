@@ -1,5 +1,5 @@
 package Games::AlphaBeta::Reversi;
-use base Games::AlphaBeta::Position;
+use base qw(Games::AlphaBeta::Position);
 use Carp;
 
 use strict;
@@ -15,7 +15,7 @@ Games::AlphaBeta
 =head1 SYNOPSIS
 
     package My::Reversi;
-    use base Games::AlphaBeta::Reversi;
+    use base qw(Games::AlphaBeta::Reversi);
 
     # implement drawing routine
     sub draw { ... }
