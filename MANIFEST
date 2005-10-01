@@ -3,11 +3,10 @@ MANIFEST
 META.yml                                 Module meta-data (added by MakeMaker)
 Makefile.PL
 README
-examples/othello.pl
+bin/othello-demo
 lib/Games/AlphaBeta.pm
 lib/Games/AlphaBeta/Position.pm
 lib/Games/AlphaBeta/Reversi.pm
-lib/Games/Sequential
 lib/Games/Sequential.pm
 t/000compile.t
 t/001strict.t
