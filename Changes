@@ -1,4 +1,4 @@
-Games::AlphaBeta - 0.4.3:
+Games::AlphaBeta - 0.4.6:
 
 * bumped version number because Module::Build's dist_name &
   dist_version is broken :(
