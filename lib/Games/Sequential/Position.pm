@@ -45,7 +45,9 @@ object.
 =item apply $move
 
 Accept a move and apply it to the current state producing the
-next state. Return a reference to itself.
+next state. Return a reference to itself. Note that this method
+is responsible for also advancing the state's perception of which
+player's turn it is.
 
 Something like this (sans error checking):
 
