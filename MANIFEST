@@ -1,15 +1,19 @@
 Changes
 MANIFEST
+META.yml                                 Module meta-data (added by MakeMaker)
+Makefile.PL
+README
 examples/othello.pl
 lib/Games/AlphaBeta.pm
 lib/Games/AlphaBeta/Position.pm
 lib/Games/AlphaBeta/Reversi.pm
-META.yml                                 Module meta-data (added by MakeMaker)
+lib/Games/Sequential
+lib/Games/Sequential.pm
 t/000compile.t
 t/001strict.t
 t/002warnings.t
 t/004uselib.t
+t/00_Games-Sequential-Position.t
 t/01_Games-AlphaBeta.t
+t/01_Games-Sequential.t
 t/02_Games-AlphaBeta-Reversi.t
-Makefile.PL
-README
