@@ -6,7 +6,7 @@ use Carp;
 use Storable qw(dclone);
 use 5.006001;
 
-our $VERSION = '0.3';
+our $VERSION = '0.3.1';
 
 =head1 NAME
 
