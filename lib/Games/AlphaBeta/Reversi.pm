@@ -251,7 +251,7 @@ sub findmoves {
 
 =item evaluate
 
-Evaluate a game position.
+Evaluate a game position and return its fitness value.
 
 =cut
 
@@ -271,8 +271,9 @@ sub evaluate {
 
 =item apply $move
 
-Apply a move to the current position, producing the new position.
-Return reference to itself on succes, undef on error.
+Apply a move to the current position, transforming it into the
+next position. Return reference to itself on succes, undef on
+error.
 
 =cut
 

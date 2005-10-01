@@ -42,7 +42,7 @@ object.
 
 =over 4
 
-=item apply $move
+=item apply($move)
 
 Accept a move and apply it to the current state producing the
 next state. Return a reference to itself. Note that this method
@@ -165,7 +165,7 @@ Stig Brautaset, E<lt>stig@brautaset.orgE<gt>
 
 =head1 COPYRIGHT AND LICENCE
 
-Copyright (C) 2004 by Stig Brautaset
+Copyright (C) 2004, 2005 by Stig Brautaset
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.3 or,
