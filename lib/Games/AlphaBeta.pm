@@ -56,13 +56,29 @@ C<evaluate()> and C<findmoves()>. This is explained more
 carefully in L<Games::AlphaBeta::Position> which is a base class
 you can use to implement your position object.
 
+=head1 INHERITED METHODS
+
+The following methods are inherited from L<Games::Sequential>:
+
+=over
+
+=item new
+
+=item debug 
+
+=item peek_pos
+
+=item peek_move
+
+=item move 
+
+=item undo
+
+=back
+
 =head1 METHODS
 
-Most of this module's methods are inherited from
-L<Games::Sequential>; be sure to check its documentation. The
-methods unique to Games::AlphaBeta are described below.
-
-=over 4
+=over 
 
 =item _init [@list]
 
@@ -113,8 +129,8 @@ sub ply {
 Perform the best move found after an AlphaBeta game-tree search
 to depth $ply. If $ply is not specified, the default depth is
 used (see C<ply()>). The best move found is performed and a
-reference to the resulting position is returned. undef is
-returned on failure.
+reference to the resulting position is returned on success, and
+undef is returned on failure.
 
 Note that this function can take a long time if $ply is high,
 particularly if the game in question has many possible moves at
