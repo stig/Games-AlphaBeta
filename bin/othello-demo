@@ -9,7 +9,7 @@ my $p = Games::AlphaBeta::Reversi->new;
 my $g = Games::AlphaBeta->new($p);
 
 while ($p = $g->abmove) {
-   print $p->as_string;
+   print $p->as_string, "\n";
 }
 
 __DATA__
