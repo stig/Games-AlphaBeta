@@ -1,3 +1,11 @@
+Games::AlphaBeta - 0.4.3:
+
+* bumped version number because Module::Build's dist_name &
+  dist_version is broken :(
+* added Games::Sequential::Position to MANIFEST
+* added test for bin/othello-demo (and thus for
+  Games::AlphaBeta::Reversi)
+
 Games::Sequential & Games::AlphaBeta - 0.4.2:
 
 * bumped version numbers

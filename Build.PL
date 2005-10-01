@@ -3,8 +3,7 @@ use lib 'mbk';
 use Module::Build::Kwalitee;
 
 Module::Build::Kwalitee->new(
-  dist_name => 'Games::AlphaBeta',
-  dist_version => '0.4.3',
+  module_name => 'Games::AlphaBeta',
   license => 'perl',
   build_requires => {
     'Test::More' => 0,
