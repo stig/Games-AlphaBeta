@@ -12,11 +12,10 @@ use Games::AlphaBeta::Reversi;
 
 my $perl = $Config{perlpath};
 my $othello = catfile( $Bin, qw(.. bin othello-demo) );
-my $blib = catfile( $Bin, qw(.. blib) );
 my $lib = catfile( $Bin, qw(.. lib) );
 
 local $/ = "\n\n";
-my @states = qx( $perl -I$blib -I$lib $othello ) 
+my @states = qx( $perl -I$lib $othello ) 
   or die 'running trace helper failed';
 
 my $p = Games::AlphaBeta::Reversi->new;
