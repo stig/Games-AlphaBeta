@@ -4,6 +4,7 @@ use Module::Build::Kwalitee;
 
 Module::Build::Kwalitee->new(
   module_name => 'Games::AlphaBeta',
+  license => 'perl',
   create_readme => 1,
   create_makefile_pl => 'passthrough',
   script_files => qw(
