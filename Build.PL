@@ -4,9 +4,9 @@ use Module::Build::Kwalitee;
 
 Module::Build::Kwalitee->new(
   module_name => 'Games::AlphaBeta',
-  requires => {
-    'Games::Sequential' => '0.4.3',
-  },
   create_readme => 1,
   create_makefile_pl => 'passthrough',
+  script_files => qw(
+    bin/othello-demo
+  ),
 )->create_build_script;
