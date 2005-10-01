@@ -8,7 +8,7 @@ Module::Build::Kwalitee->new(
   build_requires => {
     'Test::More' => 0,
     'File::Spec::Functions' => 0,
-  ,
+  },
   script_files => qw(
     bin/othello-demo
   ),
