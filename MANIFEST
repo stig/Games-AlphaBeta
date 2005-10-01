@@ -2,6 +2,7 @@ Changes
 MANIFEST
 META.yml                                 Module meta-data (added by MakeMaker)
 Makefile.PL
+Build.PL
 README
 bin/othello-demo
 lib/Games/AlphaBeta.pm
