@@ -1,17 +1,32 @@
-use Test::More tests => 52;
+#!perl
+use strict;
+use warnings;
+
+use Test::More tests => 104;
 use FindBin qw( $Bin );
 use File::Spec::Functions;
 use Config;
 
+use Games::AlphaBeta;
+use Games::AlphaBeta::Reversi;
+
 my $perl = $Config{perlpath};
 my $othello = catfile( $Bin, qw(.. bin othello-demo) );
+my $blib = catfile( $Bin, qw(.. blib) );
 my $lib = catfile( $Bin, qw(.. lib) );
 
 local $/ = "\n\n";
-my @states = qx( $perl -I$lib $othello ) 
+my @states = qx( $perl -I$blib -I$lib $othello ) 
   or die 'running trace helper failed';
 
-is shift @states, $_ while <DATA>;
+my $p = Games::AlphaBeta::Reversi->new;
+my $g = Games::AlphaBeta->new($p);
+
+while ($p = $g->abmove) {
+  my $state = $p->as_string . "\n";
+  is $state, shift @states;
+  is $state, <DATA>;
+}
 
 __DATA__
      a b c d e f g h
