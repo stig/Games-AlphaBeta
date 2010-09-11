@@ -1,19 +1,13 @@
-Changes
-MANIFEST
-META.yml                                 Module meta-data (added by MakeMaker)
-Makefile.PL
-Build.PL
-README
 bin/othello-demo
+Build.PL
+Changes
 lib/Games/AlphaBeta.pm
 lib/Games/AlphaBeta/Position.pm
 lib/Games/AlphaBeta/Reversi.pm
 lib/Games/Sequential.pm
 lib/Games/Sequential/Position.pm
-t/000compile.t
-t/001pragmas.t
-t/003pod.t
-t/004uselib.t
+MANIFEST
+MANIFEST.SKIP
 t/00_Games-Sequential-Position.t
 t/01_Games-AlphaBeta.t
 t/01_Games-Sequential.t
