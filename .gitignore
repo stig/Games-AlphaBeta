@@ -2,3 +2,7 @@ blib
 _build
 Build
 *.bak
+README
+Makefile.PL
+META.yml
+*.gz
