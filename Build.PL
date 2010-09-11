@@ -1,8 +1,7 @@
 use 5.006001;
-use lib 'mbk';
-use Module::Build::Kwalitee;
+use Module::Build;
 
-Module::Build::Kwalitee->new(
+Module::Build->new(
   module_name => 'Games::AlphaBeta',
   license => 'perl',
   build_requires => {
