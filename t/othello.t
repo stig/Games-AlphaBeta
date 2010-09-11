@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 104;
+use Test::More tests => 122;
 use FindBin qw( $Bin );
 use File::Spec::Functions;
 use Config;
@@ -651,4 +651,112 @@ Player 2 to move.
  7 | . . . o x o o o
  8 | . . . x x x x .
 Player 1 to move.
+
+     a b c d e f g h
+   +----------------
+ 1 | x o o o o o o o
+ 2 | x o o o o o o o
+ 3 | x o o o o o o o
+ 4 | x o o o o x o o
+ 5 | x o o o o o x o
+ 6 | x . o o x x o o
+ 7 | . . . o x o o o
+ 8 | . . . x x x x .
+Player 2 to move.
+
+     a b c d e f g h
+   +----------------
+ 1 | x o o o o o o o
+ 2 | x o o o o o o o
+ 3 | x o o o o o o o
+ 4 | x o o o o x o o
+ 5 | x o o o o o x o
+ 6 | x x x x x x o o
+ 7 | . . . o x o o o
+ 8 | . . . x x x x .
+Player 1 to move.
+
+     a b c d e f g h
+   +----------------
+ 1 | x o o o o o o o
+ 2 | x o o o o o o o
+ 3 | x o o o o o o o
+ 4 | x o o o o x o o
+ 5 | x o o o o o x o
+ 6 | x o x x x x o o
+ 7 | o . . o x o o o
+ 8 | . . . x x x x .
+Player 2 to move.
+
+     a b c d e f g h
+   +----------------
+ 1 | x o o o o o o o
+ 2 | x o o o o o o o
+ 3 | x o o o o o o o
+ 4 | x o o o o x o o
+ 5 | x o o o o o x o
+ 6 | x x x x x x o o
+ 7 | o . x x x o o o
+ 8 | . . . x x x x .
+Player 1 to move.
+
+     a b c d e f g h
+   +----------------
+ 1 | x o o o o o o o
+ 2 | x o o o o o o o
+ 3 | x o o o o o o o
+ 4 | x o o o o x o o
+ 5 | x o o o o o x o
+ 6 | x x x o x x o o
+ 7 | o . o x x o o o
+ 8 | . o . x x x x .
+Player 2 to move.
+
+     a b c d e f g h
+   +----------------
+ 1 | x o o o o o o o
+ 2 | x o o o o o o o
+ 3 | x o o o o o o o
+ 4 | x o o o o x o o
+ 5 | x o o o o o x o
+ 6 | x x x o x x o o
+ 7 | o . o x x o x o
+ 8 | . o . x x x x x
+Player 1 to move.
+
+     a b c d e f g h
+   +----------------
+ 1 | x o o o o o o o
+ 2 | x o o o o o o o
+ 3 | x o o o o o o o
+ 4 | x o o o o x o o
+ 5 | x o o o o o x o
+ 6 | x o o o x x o o
+ 7 | o o o x x o x o
+ 8 | . o . x x x x x
+Player 2 to move.
+
+     a b c d e f g h
+   +----------------
+ 1 | x o o o o o o o
+ 2 | x o o o o o o o
+ 3 | x o o o o o o o
+ 4 | x o o o o x o o
+ 5 | x o o o o o x o
+ 6 | x o o o x x o o
+ 7 | x o o x x o x o
+ 8 | x o . x x x x x
+Player 1 to move.
+
+     a b c d e f g h
+   +----------------
+ 1 | x o o o o o o o
+ 2 | x o o o o o o o
+ 3 | x o o o o o o o
+ 4 | x o o o o x o o
+ 5 | x o o o o o x o
+ 6 | x o o o o x o o
+ 7 | x o o o x o x o
+ 8 | x o o x x x x x
+Player 2 to move.
 

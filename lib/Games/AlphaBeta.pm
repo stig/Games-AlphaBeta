@@ -154,6 +154,7 @@ sub abmove {
     }
 
     my (@moves, $bestmove);
+    my $bestmove_valid = 0;
     my $pos = $self->peek_pos;
 
     return if $pos->endpos;
@@ -173,6 +174,7 @@ sub abmove {
         print "ab val: $sc" if $self->{debug};
         if ($sc > $alpha) {
             print " > $alpha new best move" if $self->{debug};
+            $bestmove_valid = 1;
             $bestmove = $move;
             $alpha = $sc;
         }
@@ -180,7 +182,7 @@ sub abmove {
     }
     print "$self->{count} visited\n" if $self->{debug};
 
-    return unless $bestmove;
+    return unless $bestmove_valid;
     return $self->move($bestmove);
 }
 
